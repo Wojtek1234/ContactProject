@@ -82,6 +82,9 @@ public class GroupDAO {
     }
 
     public Group getGroup(String test_name) {
-        return null;
+        String[] strings={test_name};
+        Cursor cursor=database.query(MY_TABLE,collumns,MySQLConnector.KEY_GROUPNAME+"= ?",strings,null, null, null, null);
+        cursor.moveToFirst();
+        return cursorToGroup(cursor);
     }
 }

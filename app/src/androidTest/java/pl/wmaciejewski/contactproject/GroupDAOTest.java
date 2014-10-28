@@ -34,23 +34,14 @@ public class GroupDAOTest extends AndroidTestCase {
     }
 
 
-//    public void testDatabaseOpen(){
-//        try {
-//            groupDao.open();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        assertTrue(groupDao.getDatabase() instanceof SQLiteDatabase);
-//
-//    }
 
     public void testAddGroup(){
         groupDao.createGroup(TEST_NAME);
         Group group=groupDao.getGroup(TEST_NAME);
         Group group1=groupDao.getAllGroups().get(0);
 
-        assertEquals(group,group1);
+        assertEquals(group.getGroupName(),group1.getGroupName());
+        assertEquals(group.getId(),group1.getId());
 
 
     }
