@@ -12,9 +12,19 @@ public class MySQLConnector extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     //Table
     public static final String TABLE_PERSON = "person";
+    public static final String TABLE_GROUP= "contactgroup";
     //Colums
-    public static final String KEY_ID = "_id";
-    public static final String ID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
+    public static final String KEY_GROUPID = "group_id";
+    public static final String GROUPID_OPTIONS ="INTEGER PRIMARY KEY AutoIncrement";
+    public static final int GROUPID_COLUMN = 0;
+
+    public static final String KEY_GROUPNAME = "groupname";
+    public static final String GROUPNAME_OPTIONS = "TEXT NOT NULL UNIQUE";
+    public static final int GROUPNAME_COLUMN = 1;
+
+    //Colums
+    public static final String KEY_ID = "id";
+    public static final String ID_OPTIONS = "INTEGER PRIMARY KEY AutoIncrement";
     public static final int ID_COLUMN = 0;
 
     public static final String KEY_NAME = "name";
@@ -44,24 +54,17 @@ public class MySQLConnector extends SQLiteOpenHelper {
     public static final int SMALLIMAGE_COLUMN = 5;
 
     public static final String KEY_GROUPFKID = "fk_group_id";
-    public static final String GROUPFKID_OPTIONS = "INTEGER FOREIGN KEY(fk_group_id) REFERENCES group(_id)";
+    public static final String GROUPFKID_OPTIONS = "INTEGER, FOREIGN KEY("+KEY_GROUPFKID+") REFERENCES "+TABLE_GROUP+"("+KEY_GROUPID+")";
     public static final int GROUPFKID_COLUMN = 5;
 
     //Table
-    public static final String TABLE_GROUP= "group";
-    //Colums
-    public static final String KEY_GROUPID = "_id";
-    public static final String GROUPID_OPTIONS = "INTEGER PRIMARY KEY AUTOINCREMENT";
-    public static final int GROUPID_COLUMN = 0;
 
-    public static final String KEY_GROUPNAME = "groupname";
-    public static final String GROUPNAME_OPTIONS = "TEXT NOT NULL";
-    public static final int GROUPNAME_COLUMN = 1;
+
 
 
     // Table Create Statements
 
-    private static final String CREATE_TABLE_PERSON = "CREATE TABLE " + TABLE_PERSON + "(" +
+    private static final String CREATE_TABLE_PERSON = "CREATE TABLE " + TABLE_PERSON + " (" +
             KEY_ID + " "+ ID_OPTIONS + ", "+
             KEY_NAME+ " "+NAME_OPTIONS+ ", "+
             KEY_SURNAME+ " "+SURNAME_OPTIONS+ ", "+
@@ -70,11 +73,11 @@ public class MySQLConnector extends SQLiteOpenHelper {
             KEY_IMAGE+ " "+IMAGE_OPTIONS+ ", "+
             KEY_SMALLIMAGE+ " "+SMALLIMAGE_OPTIONS+ ", "+
             KEY_GROUPFKID+ " "+GROUPFKID_OPTIONS+
-             ")";
-    private static final String CREATE_TABLE_GROUP = "CREATE TABLE " + TABLE_GROUP+ "(" +
+             " );";
+    private static final String CREATE_TABLE_GROUP = "CREATE TABLE " + TABLE_GROUP+ " (" +
             KEY_GROUPID + " "+ GROUPID_OPTIONS + ", "+
             KEY_GROUPNAME+ " "+GROUPNAME_OPTIONS+
-            ")";
+            " );";
 
     public MySQLConnector(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

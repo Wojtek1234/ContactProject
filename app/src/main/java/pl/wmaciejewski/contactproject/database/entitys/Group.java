@@ -8,6 +8,10 @@ public class Group {
     private long id;
     private String groupName;
 
+    public Group(long aLong, String string) {
+        this.id=aLong;
+        this.groupName=string;
+    }
 
 
     public long getId() {
