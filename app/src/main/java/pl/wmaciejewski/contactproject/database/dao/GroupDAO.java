@@ -19,7 +19,7 @@ public class GroupDAO {
 
 
     private SQLiteDatabase database;
-    //For test purpose
+
     private static String MY_TABLE = MySQLConnector.TABLE_GROUP;
 
     public SQLiteDatabase getDatabase() {
