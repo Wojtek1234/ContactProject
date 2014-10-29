@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_NEW_PERSON){
             if(resultCode==REQUEST_CREATE_PERSON){
-                Person person=data.getParcelableExtra("Person");
+               
             }
         }
     }

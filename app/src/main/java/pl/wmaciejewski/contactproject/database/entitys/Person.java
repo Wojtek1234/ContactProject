@@ -9,7 +9,7 @@ import android.os.Parcelable;
 /**
  * Created by w.maciejewski on 2014-10-28.
  */
-public class Person implements Parcelable{
+public class Person {
 
 
     private long id;
@@ -123,25 +123,6 @@ public class Person implements Parcelable{
         this.smallImage = smallImage;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-        parcel.writeString(this.name );
-        parcel.writeString(this.surname );
-        parcel.writeString(this.email );
-        parcel.writeString(this.phoneNumber );
-        if (this.image==null) parcel.writeString("null");
-        else parcel.writeString(this.image.toString() );
-        parcel.writeInt(this.smallImage.length);
-        parcel.writeByteArray(this.smallImage);
-        parcel.writeLong(this.groupId);
-
-    }
 
 
 
