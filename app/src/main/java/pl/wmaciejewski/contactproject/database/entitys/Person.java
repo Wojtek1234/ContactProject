@@ -143,30 +143,6 @@ public class Person implements Parcelable{
 
     }
 
-    private  Person(Parcel in){
-        this.name = in.readString();
-        this.surname = in.readString();
-        this.email = in.readString();
-        this.phoneNumber = in.readString();
-        if(in.readString().equals("null"))this.image = null;
 
-        else this.image =  Uri.parse(in.readString());
-        this.smallImage = new byte[in.readInt()];
-        in.readByteArray(this.smallImage);
-        this.groupId=in.readLong();
-    }
-
-    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
-
-        @Override
-        public Person createFromParcel(Parcel source) {
-            return new Person(source);
-        }
-
-        @Override
-        public Person[] newArray(int size) {
-            return new Person[size];
-        }
-    };
 
 }
