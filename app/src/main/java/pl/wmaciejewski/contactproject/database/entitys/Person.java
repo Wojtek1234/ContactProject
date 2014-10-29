@@ -30,8 +30,6 @@ public class Person implements Parcelable{
         this.phoneNumber = phoneNumber;
         if (imageUri == null) this.image = null;
         else this.image = Uri.parse(imageUri);
-
-
         this.smallImage =imageArray;
         if(groupId==null)this.groupId=0;
         else this.groupId = groupId;
@@ -137,9 +135,36 @@ public class Person implements Parcelable{
         parcel.writeString(this.surname );
         parcel.writeString(this.email );
         parcel.writeString(this.phoneNumber );
-        parcel.writeString(this.image.toString() );
+        if (this.image==null) parcel.writeString("null");
+        else parcel.writeString(this.image.toString() );
         parcel.writeByteArray(this.smallImage);
         parcel.writeLong(this.groupId);
 
     }
+
+    private  Person(Parcel in){
+        this.name = in.readString();
+        this.surname = in.readString();
+        this.email = in.readString();
+        this.phoneNumber = in.readString();
+        if(in.readString().equals("null"))this.image = null;
+        else this.image =  Uri.parse(in.readString());
+
+        in.readByteArray(this.smallImage);
+        this.groupId=in.readLong();
+    }
+
+    public static final Parcelable.Creator<Person> CREATOR = new Parcelable.Creator<Person>() {
+
+        @Override
+        public Person createFromParcel(Parcel source) {
+            return new Person(source);
+        }
+
+        @Override
+        public Person[] newArray(int size) {
+            return new Person[size];
+        }
+    };
+
 }

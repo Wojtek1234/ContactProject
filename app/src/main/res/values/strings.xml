@@ -6,5 +6,7 @@
     <string name="addButtonText">Add</string>
     <string name="delateButtonText">Delete</string>
     <string name="editButtonText">Edit</string>
+    <string name="title_activity_create_new_person">CreateNewPersonActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
