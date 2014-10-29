@@ -22,27 +22,19 @@ public class GroupDAO {
 
     private static String MY_TABLE = MySQLConnector.TABLE_GROUP;
 
-    public SQLiteDatabase getDatabase() {
-        return database;
-    }
 
-    private MySQLConnector sqlConnector;
+
+
 
     private String[] collumns = {MySQLConnector.KEY_GROUPID, MySQLConnector.KEY_GROUPNAME};
 
 
-    public GroupDAO(Context context) {
-        sqlConnector = new MySQLConnector(context);
+    public GroupDAO(SQLiteDatabase database) {
+        this.database=database;
     }
 
 
-    public void open() throws SQLException {
-        database = sqlConnector.getWritableDatabase();
-    }
 
-    public void close() {
-        sqlConnector.close();
-    }
 
     public void createGroup(String groupName) {
         ContentValues values = new ContentValues();

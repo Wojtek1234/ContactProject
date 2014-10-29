@@ -3,6 +3,7 @@ package pl.wmaciejewski.contactproject;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
 
+import pl.wmaciejewski.contactproject.database.DatabaseProvider;
 import pl.wmaciejewski.contactproject.database.dao.GroupDAO;
 import pl.wmaciejewski.contactproject.database.entitys.Group;
 
@@ -12,6 +13,8 @@ import pl.wmaciejewski.contactproject.database.entitys.Group;
 public class GroupDAOTest extends AndroidTestCase {
 
     private GroupDAO groupDao;
+    private DatabaseProvider databaseProvider;
+
     private static String TEST_NAME="grupa1";
     @Override
     protected void setUp() throws Exception {
@@ -20,8 +23,9 @@ public class GroupDAOTest extends AndroidTestCase {
 
         RenamingDelegatingContext context
                 = new RenamingDelegatingContext(getContext(), "test_");
-        groupDao=new GroupDAO(context);
-        groupDao.open();
+        databaseProvider=new DatabaseProvider(context);
+        databaseProvider.open();
+        groupDao=new GroupDAO(databaseProvider.getDatabase());
         groupDao.removeAll();
 
     }
@@ -30,7 +34,7 @@ public class GroupDAOTest extends AndroidTestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         groupDao.removeAll();
-        groupDao.close();
+        databaseProvider.close();
     }
 
 
