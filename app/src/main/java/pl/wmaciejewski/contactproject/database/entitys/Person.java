@@ -3,11 +3,13 @@ package pl.wmaciejewski.contactproject.database.entitys;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by w.maciejewski on 2014-10-28.
  */
-public class Person {
+public class Person implements Parcelable{
 
 
     private long id;
@@ -17,7 +19,7 @@ public class Person {
     private String email;
     private String phoneNumber;
     private Uri image;
-    private Bitmap smallImage;
+    private byte[] smallImage;
 
 
     public Person(String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupId) {
@@ -30,7 +32,7 @@ public class Person {
         else this.image = Uri.parse(imageUri);
 
 
-        this.smallImage = getBitmapFromByteArray(imageArray);
+        this.smallImage =imageArray;
         if(groupId==null)this.groupId=0;
         else this.groupId = groupId;
     }
@@ -42,7 +44,7 @@ public class Person {
         this.email = email;
         this.phoneNumber = phoneNumber;
         if (imageUri == null) this.image = null;
-        this.smallImage = getBitmapFromByteArray(imageArray);
+        this.smallImage =imageArray;
 
         if(groupId==null) this.groupId=0;
         else this.groupId = groupId;
@@ -115,11 +117,29 @@ public class Person {
         this.image = image;
     }
 
-    public Bitmap getSmallImage() {
+    public byte[] getSmallImage() {
         return smallImage;
     }
 
-    public void setSmallImage(Bitmap smallImage) {
+    public void setSmallImage(byte[] smallImage) {
         this.smallImage = smallImage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        parcel.writeString(this.name );
+        parcel.writeString(this.surname );
+        parcel.writeString(this.email );
+        parcel.writeString(this.phoneNumber );
+        parcel.writeString(this.image.toString() );
+        parcel.writeByteArray(this.smallImage);
+        parcel.writeLong(this.groupId);
+
     }
 }

@@ -34,17 +34,12 @@ public class PersonDAO extends abstractDAO<Person> {
         values.put(collumns[4], entity.getPhoneNumber());
         if (entity.getImage() == null) values.put(collumns[5], (byte[]) null);
         else values.put(collumns[5], entity.getImage().toString());
-        values.put(collumns[6], setPhpotoAsByteArray(entity.getSmallImage()));
+        values.put(collumns[6], entity.getSmallImage());
         values.put(collumns[7], entity.getGroupId());
 
         database.insertOrThrow(MY_TABLE, null, values);
     }
 
-    private byte[] setPhpotoAsByteArray(Bitmap bmp) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
-    }
 
 
     @Override
