@@ -15,13 +15,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeGUI();
+
+    }
+
+    private void initializeGUI() {
         list=(ListView)findViewById(R.id.listview);
         addBut=(Button)findViewById(R.id.addButton);
         removeBut=(Button)findViewById(R.id.removeButton);
         removeBut=(Button)findViewById(R.id.removeButton);
-
     }
-
 
 
 }
