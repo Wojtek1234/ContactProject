@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import pl.wmaciejewski.contactproject.database.entitys.Person;
 
 
 public class MainActivity extends Activity {
@@ -50,7 +48,7 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_NEW_PERSON){
             if(resultCode==REQUEST_CREATE_PERSON){
-               
+
             }
         }
     }
