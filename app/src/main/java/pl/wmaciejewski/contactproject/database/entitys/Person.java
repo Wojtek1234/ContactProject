@@ -32,8 +32,11 @@ public class Person {
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        if(imageUri==null)this.image=null ;
+        else this.image = Uri.parse(imageUri);
 
-        this.image = Uri.parse(imageUri);
+
+
         this.smallImage=getBitmapFromByteArray(imageArray);
         this.groupId=groupId;
     }
@@ -44,7 +47,7 @@ public class Person {
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.image = Uri.parse(imageUri);
+        if(imageUri==null)this.image=null ;
         this.smallImage=getBitmapFromByteArray(imageArray);
         this.groupId=groupid;
 

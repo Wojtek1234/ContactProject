@@ -52,6 +52,22 @@ public class PersonDAOTest extends AndroidTestCase {
         this.databaseProvider.close();
     }
 
+    public void testAddPerson(){
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.no_photo);
+        this.groupDao.create(TEST_NAME);
+        Group group=this.groupDao.getByName(TEST_NAME).get(0);
+        Person person=new Person("Janek","Wisniewski","janek@wisniewski.pl","666666666",null,setPhpotoAsByteArray(icon),group.getId());
+        personDAO.create(person);
+
+        Person person1=personDAO.getAll().get(0);
+
+        assertEquals(person.getName(),person1.getName());
+        assertEquals(person.getSurname(),person1.getSurname());
+
+        assertEquals(person.getEmail(),person1.getEmail());
+    }
+
     public void testGetPersonsByGroup(){
         Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.no_photo);
@@ -76,11 +92,11 @@ public class PersonDAOTest extends AndroidTestCase {
         assertTrue(group1Persons.size()==2);
         assertTrue(group2Persons.size()==2);
 
-        assertTrue((group1Persons.get(0).getName())=="Janek");
-        assertTrue((group1Persons.get(1).getName())=="Janek1");
+        assertTrue("Janek".equals(group1Persons.get(0).getName()));
+        assertEquals((group1Persons.get(1).getName()), "Janek1");
 
-        assertTrue((group2Persons.get(0).getName())=="Janek2");
-        assertTrue((group2Persons.get(1).getName())=="Janek3");
+        assertEquals((group2Persons.get(0).getName()), "Janek2");
+        assertEquals((group2Persons.get(1).getName()), "Janek3");
 
     }
 

@@ -34,9 +34,12 @@ public class PersonDAO extends abstractDAO<Person> {
         values.put(collumns[2], entity.getSurname());
         values.put(collumns[3], entity.getEmail());
         values.put(collumns[4], entity.getPhoneNumber());
-        values.put(collumns[5], entity.getImage().toString());
+        if(entity.getImage()==null) values.put(collumns[5], (byte[]) null);
+        else values.put(collumns[5], entity.getImage().toString());
         values.put(collumns[6], setPhpotoAsByteArray(entity.getSmallImage()));
         values.put(collumns[7], entity.getGroupId());
+
+        database.insertOrThrow(MY_TABLE, null, values);
     }
 
     private byte[] setPhpotoAsByteArray(Bitmap bmp) {
