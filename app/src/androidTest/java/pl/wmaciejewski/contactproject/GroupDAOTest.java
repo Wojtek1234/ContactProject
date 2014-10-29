@@ -1,7 +1,10 @@
 package pl.wmaciejewski.contactproject;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
+
+import junit.framework.Assert;
 
 import pl.wmaciejewski.contactproject.database.DatabaseProvider;
 import pl.wmaciejewski.contactproject.database.dao.GroupDAO;
@@ -23,31 +26,45 @@ public class GroupDAOTest extends AndroidTestCase {
 
         RenamingDelegatingContext context
                 = new RenamingDelegatingContext(getContext(), "test_");
-        databaseProvider=new DatabaseProvider(context);
-        databaseProvider.open();
-        groupDao=new GroupDAO(databaseProvider.getDatabase());
-        groupDao.removeAll();
+        this.databaseProvider=new DatabaseProvider(context);
+        this.databaseProvider.open();
+        this.groupDao=new GroupDAO(databaseProvider.getDatabase());
+        this.groupDao.removeAll();
 
     }
 
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        groupDao.removeAll();
-        databaseProvider.close();
+        this.groupDao.removeAll();
+        this.databaseProvider.close();
     }
 
 
 
     public void testAddGroup(){
-        groupDao.createGroup(TEST_NAME);
-        Group group=groupDao.getGroup(TEST_NAME);
-        Group group1=groupDao.getAllGroups().get(0);
+        this.groupDao.create(TEST_NAME);
+        Group group=this.groupDao.getByName(TEST_NAME).get(0);
+        Group group1=this.groupDao.getAll().get(0);
 
         assertEquals(group.getGroupName(),group1.getGroupName());
         assertEquals(group.getId(),group1.getId());
 
 
+    }
+
+    public void testExceptionAddingSameGroup(){
+
+        try
+        {
+            this.groupDao.create(TEST_NAME);
+            this.groupDao.create(TEST_NAME);
+            Assert.fail("Shoild throw some exception");
+        }
+        catch(SQLiteConstraintException e)
+        {
+
+        }
     }
 
 }

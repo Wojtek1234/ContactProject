@@ -26,8 +26,18 @@ public class Person {
     private Bitmap smallImage;
 
 
+    public Person(String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray,Long groupId) {
 
-    public Person(Long id, String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.image = Uri.parse(imageUri);
+        this.smallImage=getBitmapFromByteArray(imageArray);
+        this.groupId=groupId;
+    }
+
+    public Person(Long id,String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray,Long groupid) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -35,6 +45,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.image = Uri.parse(imageUri);
         this.smallImage=getBitmapFromByteArray(imageArray);
+        this.groupId=groupid;
 
     }
 
