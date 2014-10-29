@@ -137,6 +137,7 @@ public class Person implements Parcelable{
         parcel.writeString(this.phoneNumber );
         if (this.image==null) parcel.writeString("null");
         else parcel.writeString(this.image.toString() );
+        parcel.writeInt(this.smallImage.length);
         parcel.writeByteArray(this.smallImage);
         parcel.writeLong(this.groupId);
 
@@ -148,8 +149,9 @@ public class Person implements Parcelable{
         this.email = in.readString();
         this.phoneNumber = in.readString();
         if(in.readString().equals("null"))this.image = null;
-        else this.image =  Uri.parse(in.readString());
 
+        else this.image =  Uri.parse(in.readString());
+        this.smallImage = new byte[in.readInt()];
         in.readByteArray(this.smallImage);
         this.groupId=in.readLong();
     }
