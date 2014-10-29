@@ -31,10 +31,11 @@ public class Person {
 
 
         this.smallImage = getBitmapFromByteArray(imageArray);
-        this.groupId = groupId;
+        if(groupId==null)this.groupId=0;
+        else this.groupId = groupId;
     }
 
-    public Person(Long id, String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupid) {
+    public Person(Long id, String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -42,7 +43,9 @@ public class Person {
         this.phoneNumber = phoneNumber;
         if (imageUri == null) this.image = null;
         this.smallImage = getBitmapFromByteArray(imageArray);
-        this.groupId = groupid;
+
+        if(groupId==null) this.groupId=0;
+        else this.groupId = groupId;
 
     }
 

@@ -100,6 +100,27 @@ public class PersonDAOTest extends AndroidTestCase {
 
     }
 
+    public void testGetOrder(){
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.no_photo);
+        List<Person> persons = new ArrayList<Person>();
+        persons.add(new Person("D",null,null,null,null,setPhpotoAsByteArray(icon),null));
+        persons.add(new Person("a",null,null,null,null,setPhpotoAsByteArray(icon),null));
+        persons.add(new Person("B",null,null,null,null,setPhpotoAsByteArray(icon),null));
+        persons.add(new Person("b",null,null,null,null,setPhpotoAsByteArray(icon),null));
+        for (Person person : persons) {
+            this.personDAO.create(person);
+        }
+
+        List<Person> persons1 = this.personDAO.getAll();
+        assertEquals(persons1.get(0).getName(),"a");
+        assertEquals(persons1.get(1).getName(),"B");
+        assertEquals(persons1.get(2).getName(),"b");
+        assertEquals(persons1.get(3).getName(),"D");
+
+
+    }
+
 
     private byte[] setPhpotoAsByteArray(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();

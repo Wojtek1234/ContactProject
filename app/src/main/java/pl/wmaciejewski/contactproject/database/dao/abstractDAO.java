@@ -38,7 +38,8 @@ public abstract class abstractDAO<T> {
 
     public List<T> getAll() {
         Cursor cursor = database.query(MY_TABLE,
-                collumns, null, null, null, null, null);
+                collumns, null, null, null, null, collumns[1] + " COLLATE NOCASE;");
+
         cursor.moveToFirst();
         List<T> groups = rewriteToList(cursor);
         cursor.close();

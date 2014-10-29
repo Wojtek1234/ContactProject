@@ -19,14 +19,13 @@ public class GroupDAOTest extends AndroidTestCase {
     private static String TEST_NAME = "grupa1";
     private GroupDAO groupDao;
     private DatabaseProvider databaseProvider;
-    private Context context;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
 
-        this.context = new RenamingDelegatingContext(getContext(), "test_");
+        Context context = new RenamingDelegatingContext(getContext(), "test_");
         this.databaseProvider = new DatabaseProvider(context);
         this.databaseProvider.open();
         this.groupDao = new GroupDAO(databaseProvider.getDatabase());

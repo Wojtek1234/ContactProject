@@ -72,7 +72,7 @@ public class PersonDAO extends abstractDAO<Person> {
     public List<Person> getByGropID(long id) {
 
 
-        Cursor cursor = database.query(MY_TABLE, collumns, collumns[7] + "=" + id, null, null, null, null, null);
+        Cursor cursor = database.query(MY_TABLE, collumns, collumns[7] + "=" + id, null, null, null, collumns[1] + " COLLATE NOCASE;");
         cursor.moveToFirst();
 
         return rewriteToList(cursor);
