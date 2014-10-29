@@ -32,6 +32,7 @@ public class Person {
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
+
         this.image = Uri.parse(imageUri);
         this.smallImage=getBitmapFromByteArray(imageArray);
         this.groupId=groupId;

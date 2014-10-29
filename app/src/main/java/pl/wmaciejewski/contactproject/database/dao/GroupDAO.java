@@ -8,6 +8,7 @@ import java.util.List;
 
 import pl.wmaciejewski.contactproject.database.MySQLConnector;
 import pl.wmaciejewski.contactproject.database.entitys.Group;
+import pl.wmaciejewski.contactproject.database.entitys.Person;
 
 /**
  * Created by w.maciejewski on 2014-10-28.
@@ -15,11 +16,10 @@ import pl.wmaciejewski.contactproject.database.entitys.Group;
 public class GroupDAO extends abstractDAO<Group> {
 
 
-
     public GroupDAO(SQLiteDatabase database) {
         super(database);
-        collumns= new String[]{MySQLConnector.KEY_GROUPID, MySQLConnector.KEY_GROUPNAME};
-        MY_TABLE=MySQLConnector.TABLE_GROUP;
+        collumns = new String[]{MySQLConnector.KEY_GROUPID, MySQLConnector.KEY_GROUPNAME};
+        MY_TABLE = MySQLConnector.TABLE_GROUP;
     }
 
 
@@ -31,11 +31,10 @@ public class GroupDAO extends abstractDAO<Group> {
     }
 
 
-
     @Override
     public List<Group> getByName(String name) {
-        String[] strings={name};
-        Cursor cursor=database.query(MY_TABLE,collumns,collumns[1]+"= ?",strings,null, null, null, null);
+        String[] strings = {name};
+        Cursor cursor = database.query(MY_TABLE, collumns, collumns[1] + "= ?", strings, null, null, null, null);
         cursor.moveToFirst();
         List<Group> groups = rewriteToList(cursor);
         return groups;
@@ -49,13 +48,10 @@ public class GroupDAO extends abstractDAO<Group> {
     }
 
 
-
-
     @Override
     protected Group cursorToEntity(Cursor cursor) {
         return new Group(cursor.getLong(0), cursor.getString(1));
     }
-
 
 
 
