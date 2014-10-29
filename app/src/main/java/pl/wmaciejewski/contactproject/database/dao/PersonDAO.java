@@ -10,7 +10,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import pl.wmaciejewski.contactproject.database.MySQLConnector;
-import pl.wmaciejewski.contactproject.database.entitys.Group;
 import pl.wmaciejewski.contactproject.database.entitys.Person;
 
 /**
@@ -23,7 +22,6 @@ public class PersonDAO extends abstractDAO<Person> {
         super(database);
         collumns = new String[]{MySQLConnector.KEY_ID, MySQLConnector.KEY_NAME, MySQLConnector.KEY_SURNAME, MySQLConnector.KEY_EMAIL,
                 MySQLConnector.KEY_NUMBERPHONE, MySQLConnector.KEY_IMAGE, MySQLConnector.KEY_SMALLIMAGE, MySQLConnector.KEY_GROUPFKID};
-        ;
         MY_TABLE = MySQLConnector.TABLE_PERSON;
     }
 
@@ -34,7 +32,7 @@ public class PersonDAO extends abstractDAO<Person> {
         values.put(collumns[2], entity.getSurname());
         values.put(collumns[3], entity.getEmail());
         values.put(collumns[4], entity.getPhoneNumber());
-        if(entity.getImage()==null) values.put(collumns[5], (byte[]) null);
+        if (entity.getImage() == null) values.put(collumns[5], (byte[]) null);
         else values.put(collumns[5], entity.getImage().toString());
         values.put(collumns[6], setPhpotoAsByteArray(entity.getSmallImage()));
         values.put(collumns[7], entity.getGroupId());
@@ -70,14 +68,14 @@ public class PersonDAO extends abstractDAO<Person> {
         return new Person(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3)
                 , cursor.getString(4), cursor.getString(5), cursor.getBlob(6), cursor.getLong(7));
     }
+
     public List<Person> getByGropID(long id) {
 
 
-        Cursor cursor = database.query(MY_TABLE, collumns, collumns[7] + "="+id, null, null, null, null, null);
+        Cursor cursor = database.query(MY_TABLE, collumns, collumns[7] + "=" + id, null, null, null, null, null);
         cursor.moveToFirst();
-        List<Person> persons = rewriteToList(cursor);
 
-        return persons;
+        return rewriteToList(cursor);
     }
 
 }

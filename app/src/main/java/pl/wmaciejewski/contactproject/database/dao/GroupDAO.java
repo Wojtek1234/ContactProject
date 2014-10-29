@@ -8,7 +8,6 @@ import java.util.List;
 
 import pl.wmaciejewski.contactproject.database.MySQLConnector;
 import pl.wmaciejewski.contactproject.database.entitys.Group;
-import pl.wmaciejewski.contactproject.database.entitys.Person;
 
 /**
  * Created by w.maciejewski on 2014-10-28.
@@ -52,7 +51,6 @@ public class GroupDAO extends abstractDAO<Group> {
     protected Group cursorToEntity(Cursor cursor) {
         return new Group(cursor.getLong(0), cursor.getString(1));
     }
-
 
 
 }

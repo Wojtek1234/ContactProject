@@ -14,15 +14,14 @@ public class DatabaseProvider {
     private final MySQLConnector sqlConnector;
 
 
-
     private SQLiteDatabase database;
 
     public DatabaseProvider(Context context) {
-        this.sqlConnector=new MySQLConnector(context);
+        this.sqlConnector = new MySQLConnector(context);
     }
 
     public void open() throws SQLException {
-       this.database= sqlConnector.getWritableDatabase();
+        this.database = sqlConnector.getWritableDatabase();
     }
 
     public void close() {

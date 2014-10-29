@@ -2,13 +2,7 @@ package pl.wmaciejewski.contactproject.database.entitys;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-
-import java.util.BitSet;
-
-import pl.wmaciejewski.contactproject.R;
-import pl.wmaciejewski.contactproject.database.MySQLConnector;
 
 /**
  * Created by w.maciejewski on 2014-10-28.
@@ -26,38 +20,37 @@ public class Person {
     private Bitmap smallImage;
 
 
-    public Person(String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray,Long groupId) {
+    public Person(String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupId) {
 
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        if(imageUri==null)this.image=null ;
+        if (imageUri == null) this.image = null;
         else this.image = Uri.parse(imageUri);
 
 
-
-        this.smallImage=getBitmapFromByteArray(imageArray);
-        this.groupId=groupId;
+        this.smallImage = getBitmapFromByteArray(imageArray);
+        this.groupId = groupId;
     }
 
-    public Person(Long id,String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray,Long groupid) {
+    public Person(Long id, String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupid) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        if(imageUri==null)this.image=null ;
-        this.smallImage=getBitmapFromByteArray(imageArray);
-        this.groupId=groupid;
+        if (imageUri == null) this.image = null;
+        this.smallImage = getBitmapFromByteArray(imageArray);
+        this.groupId = groupid;
 
     }
 
     private Bitmap getBitmapFromByteArray(byte[] bytes) {
         try {
             return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        }catch(NullPointerException ne){
-            return  null;
+        } catch (NullPointerException ne) {
+            return null;
         }
     }
 
@@ -77,7 +70,6 @@ public class Person {
     public void setId(long id) {
         this.id = id;
     }
-
 
 
     public long getGroupId() {
