@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateNewPersonActivity"
+            android:name=".createnewperson.CreateNewPersonActivity"
             android:label="@string/title_activity_create_new_person" >
         </activity>
     </application>

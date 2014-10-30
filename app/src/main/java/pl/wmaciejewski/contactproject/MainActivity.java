@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import pl.wmaciejewski.contactproject.createnewperson.CreateNewPersonActivity;
 
 
 public class MainActivity extends Activity {
@@ -40,7 +41,11 @@ public class MainActivity extends Activity {
 
     private void openActivityForResult() {
         Intent intent = new Intent(getApplicationContext(), CreateNewPersonActivity.class);
-        startActivityForResult(intent, REQUEST_NEW_PERSON);
+
+
+        intent.putExtra("dupa","dupa");
+
+        startActivity(intent);
     }
 
     @Override

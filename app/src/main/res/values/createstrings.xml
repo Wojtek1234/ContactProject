@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_hint">Name</string>
+    <string name="surname_hint">Surname</string>
+    <string name="email_hint">e-mail adress</string>
+    <string name="phonenumber_hint">phone number</string>
+    <string name="save_button">Save Contact</string>
+
+</resources>
