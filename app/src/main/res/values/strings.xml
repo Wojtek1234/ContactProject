@@ -8,5 +8,7 @@
     <string name="editButtonText">Edit</string>
     <string name="title_activity_create_new_person">CreateNewPersonActivity</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="wrong_email">Wrong email adress \n please consider changing</string>
+    <string name="wrong_phone">Wrong phone number \n please consider changing</string>
+    <string name="wrong_both">Wrong email and phone \n plese consider changing</string>
 </resources>

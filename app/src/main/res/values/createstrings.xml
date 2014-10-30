@@ -5,5 +5,6 @@
     <string name="email_hint">e-mail adress</string>
     <string name="phonenumber_hint">phone number</string>
     <string name="save_button">Save Contact</string>
-
+    <string name="dialog_left_button">Ignore and proceed</string>
+    <string name="dialog_right_button">Return and complete</string>
 </resources>

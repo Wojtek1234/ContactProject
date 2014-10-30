@@ -8,6 +8,6 @@ import android.telephony.PhoneNumberUtils;
 public class PhoneNumberValidator implements Validator {
     @Override
     public boolean validate(CharSequence target) {
-        return PhoneNumberUtils.isGlobalPhoneNumber((String) target);
+        return PhoneNumberUtils.isGlobalPhoneNumber(target.toString().replace(" ",""));
     }
 }

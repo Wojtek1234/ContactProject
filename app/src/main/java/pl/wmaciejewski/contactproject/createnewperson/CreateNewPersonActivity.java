@@ -1,6 +1,7 @@
 package pl.wmaciejewski.contactproject.createnewperson;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -35,7 +36,7 @@ public class CreateNewPersonActivity extends Activity {
     private Uri imageUri;
     private Bitmap smallImage;
     private HashMap<EditText,Validator> validators;
-
+    private boolean areWeGoing=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class CreateNewPersonActivity extends Activity {
     }
 
     private void setUpValidators() {
+        validators=new HashMap<EditText, Validator>();
         validators.put(mailEdit,new EmailValidator());
         validators.put(phoneEdit,new PhoneNumberValidator());
     }
@@ -137,19 +139,61 @@ public class CreateNewPersonActivity extends Activity {
         }
     }
 
+    private void createWrongDialog(String text) {
+        final WrongValueDialog wrongValueDialog=new WrongValueDialog(CreateNewPersonActivity.this,text);
+        wrongValueDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                areWeGoing=wrongValueDialog.isResult();
+                if(areWeGoing) sendResultIntent();
+            }
+        });
+        wrongValueDialog.show();
+    }
+
 
 class saveButListener implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        if(!validateInput(mailEdit)){
-                    //TODO dialog ze zjebany mejl
-            return;
+            int x=0;
+            x=doOnEmail();
+            x=x+doOnPhone();
+            switch (x) {
+                case 1:
+                    createWrongDialog(getResources().getString(R.string.wrong_email));
+                    break;
+                case 2:
+                    createWrongDialog(getResources().getString(R.string.wrong_phone));
+                    break;
+                case 3:
+                    createWrongDialog(getResources().getString(R.string.wrong_both));
+                    break;
+                default:
+                    sendResultIntent();
+                    break;
+            }
+
+
+
+
         }
-        if(!validateInput(phoneEdit)){
-            //TODO dialog ze zjebany telefon
-            return;
-        }
+
+
+
+
+    private int doOnEmail() {
+        if(!validateInput(mailEdit)) return 1;
+        else return 0;
+    }
+
+    private int doOnPhone() {
+        if(!validateInput(phoneEdit)) return 2;
+        else return 0;
+    }
+}
+
+    private void sendResultIntent() {
         personDataHolder.getPerson().setImage(imageUri);
         personDataHolder.getPerson().setName(nameEdit.getText().toString());
         personDataHolder.getPerson().setSurname(surnameEdit.getText().toString());
@@ -158,7 +202,9 @@ class saveButListener implements View.OnClickListener{
         ParcelPerson parcelPerson=new ParcelPerson(personDataHolder.getPerson());
         Intent resultIntent=new Intent();
         resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON,parcelPerson);
+        NEW_INTENT_FLAG=true;
+        finish();
     }
-}
+
 
 }
