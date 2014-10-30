@@ -33,6 +33,7 @@ public class ParcelPerson implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(this.person.getId());
         parcel.writeString(this.person.getName() );
         parcel.writeString(this.person.getSurname());
         parcel.writeString(this.person.getEmail() );
@@ -45,9 +46,18 @@ public class ParcelPerson implements Parcelable {
     }
 
     private  ParcelPerson(Parcel in){
+
+        Long id=in.readLong();
+        String name=in.readString();
+        String surname=in.readString();
+        String email=in.readString();
+        String phonenumber=in.readString();
+        String imageUri=in.readString();
         byte[] imageSmall=new  byte[in.readInt()];
         in.readByteArray(imageSmall);
-        this.person=new Person(in.readString(),in.readString(),in.readString(),in.readString(),in.readString(),imageSmall,in.readLong());
+
+        Long groupid=in.readLong();
+        this.person=new Person(id,name,surname,email,phonenumber,imageUri,imageSmall,groupid);
 
 
     }

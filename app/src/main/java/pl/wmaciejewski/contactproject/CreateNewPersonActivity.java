@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.io.ByteArrayOutputStream;
 
@@ -30,7 +28,7 @@ public class CreateNewPersonActivity extends Activity {
         Intent resultIntent=new Intent();
 
 
-        resultIntent.putExtra("Person",person);
+
         setResult(MainActivity.REQUEST_CREATE_PERSON,resultIntent);
 
         finish();

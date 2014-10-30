@@ -34,7 +34,7 @@ public abstract class abstractDAO<T> {
         database.delete(MY_TABLE, null, null);
     }
 
-    ;
+
 
     public List<T> getAll() {
         Cursor cursor = database.query(MY_TABLE,

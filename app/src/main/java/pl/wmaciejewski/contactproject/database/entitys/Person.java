@@ -1,10 +1,8 @@
 package pl.wmaciejewski.contactproject.database.entitys;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Parcel;
-import android.os.Parcelable;
+
+import java.util.Arrays;
 
 /**
  * Created by w.maciejewski on 2014-10-28.
@@ -23,7 +21,7 @@ public class Person {
 
 
     public Person(String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupId) {
-
+        this.id=0;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -47,14 +45,6 @@ public class Person {
         if(groupId==null) this.groupId=0;
         else this.groupId = groupId;
 
-    }
-
-    private Bitmap getBitmapFromByteArray(byte[] bytes) {
-        try {
-            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        } catch (NullPointerException ne) {
-            return null;
-        }
     }
 
     public String getName() {
@@ -123,6 +113,29 @@ public class Person {
         this.smallImage = smallImage;
     }
 
+    @Override
+    public final boolean equals( Object object )
+    {
+        if( !(object instanceof Person) )
+            return false;
+        final Person person = (Person)object;
+        return person.getName().equals( this.name ) && person.getId()== this.getId()
+                && person.getName().equals(this.getName())
+                && person.getSurname().equals( this.getSurname())
+                && person.getEmail().equals(this.getEmail())
+                && person.getPhoneNumber().equals(this.getPhoneNumber())
+                && Arrays.equals(person.getSmallImage(),this.getSmallImage());
+
+    }
+
+    @Override
+    public final int hashCode()
+    {
+        int result;
+        result = 20;
+        result = 34 * result + (int)this.getId();
+        return result;
+    }
 
 
 

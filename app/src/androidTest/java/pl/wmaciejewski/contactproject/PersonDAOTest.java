@@ -121,8 +121,19 @@ public class PersonDAOTest extends AndroidTestCase {
 
     }
 
+    public void testAdd0Id(){
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.no_photo);
+        this.groupDao.create(TEST_NAME);
+        Long x= Long.valueOf(0);
+        Person person =new Person(x,"Janek", "Wisniewski", "janek@wisniewski.pl", "666666666", null, setPhpotoAsByteArray(icon),this.groupDao.getAll().get(0).getId());
+        this.personDAO.create(person);
+        Person person1=this.personDAO.getAll().get(0);
+        assertFalse(person1.getId()==person.getId());
+    }
 
-    private byte[] setPhpotoAsByteArray(Bitmap bmp) {
+
+    public static byte[] setPhpotoAsByteArray(Bitmap bmp) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
