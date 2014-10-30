@@ -13,7 +13,7 @@ import pl.wmaciejewski.contactproject.createnewperson.CreateNewPersonActivity;
 public class MainActivity extends Activity {
 
     public static final int REQUEST_NEW_PERSON =267 ;
-    public static final int REQUEST_CREATE_PERSON =100 ;
+    public static final int REQUEST_CREATE_PERSON_NUMBER =100 ;
     public static final String REQUEST_CREATE_PERSON="REQUEST_MASSAGE";
 
     private ListView list;
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_NEW_PERSON){
-            if(resultCode==REQUEST_CREATE_PERSON){
+            if(resultCode==REQUEST_CREATE_PERSON_NUMBER){
 
             }
         }
