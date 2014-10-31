@@ -6,5 +6,7 @@
     <string name="addButtonText">Dodaj</string>
     <string name="delateButtonText">Kasuj</string>
     <string name="editButtonText">Edytuj</string>
+    <string name="pick_image_source">Pick Image Resource</string>
+    <string name="from_gallery">Pick from gallery</string>
 
 </resources>

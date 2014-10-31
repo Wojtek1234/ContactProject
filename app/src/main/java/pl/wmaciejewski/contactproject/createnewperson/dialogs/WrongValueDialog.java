@@ -1,4 +1,4 @@
-package pl.wmaciejewski.contactproject.createnewperson;
+package pl.wmaciejewski.contactproject.createnewperson.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
