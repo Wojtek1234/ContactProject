@@ -2,12 +2,13 @@ package pl.wmaciejewski.contactproject.createnewperson.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.widget.Button;
 
 import pl.wmaciejewski.contactproject.R;
@@ -24,12 +25,12 @@ public class ImagePickerDialog extends DialogFragment {
         builder.setMessage(R.string.pick_image_source)
                 .setPositiveButton(R.string.from_gallery, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        mListener.onDialogPositiveClick(ImagePickerDialog.this);
                     }
                 })
                 .setNegativeButton(R.string.from_camera, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        mListener.onDialogNegativeClick(ImagePickerDialog.this);
                     }
                 }
                 );

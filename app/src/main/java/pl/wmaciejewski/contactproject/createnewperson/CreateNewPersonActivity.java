@@ -1,23 +1,29 @@
 package pl.wmaciejewski.contactproject.createnewperson;
 
-import android.app.Activity;
+
 import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
 import pl.wmaciejewski.contactproject.MainActivity;
 import pl.wmaciejewski.contactproject.R;
+import pl.wmaciejewski.contactproject.createnewperson.dialogs.ImagePickerDialog;
 import pl.wmaciejewski.contactproject.createnewperson.dialogs.WrongValueDialog;
 import pl.wmaciejewski.contactproject.createnewperson.modelHolder.PersonDataHolder;
 import pl.wmaciejewski.contactproject.createnewperson.validators.EmailValidator;
@@ -27,8 +33,11 @@ import pl.wmaciejewski.contactproject.database.entitys.Person;
 import pl.wmaciejewski.contactproject.modelView.ParcelPerson;
 
 
-public class CreateNewPersonActivity extends Activity {
+public class CreateNewPersonActivity extends FragmentActivity implements ImagePickerDialog.NoticeDialogListener {
+
     private static boolean NEW_INTENT_FLAG = true;
+    private static final int SELECT_PHOTO_GALLERY = 100;
+    private static final int SELECT_PHOTO_CAPTURE = 101;
 
     private PersonDataHolder personDataHolder = PersonDataHolder.getInstance().getInstance();
     private ImageView imageView;
@@ -38,6 +47,7 @@ public class CreateNewPersonActivity extends Activity {
     private Bitmap smallImage;
     private HashMap<EditText,Validator> validators;
     private boolean areWeGoing=false;
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +108,7 @@ public class CreateNewPersonActivity extends Activity {
     private void setSaveButtonListener() {
         saveButton.setOnClickListener(new saveButListener());
     }
+
     private void setUpComponents() {
         nameEdit = (EditText) findViewById(R.id.editNameView);
         surnameEdit = (EditText) findViewById(R.id.editSurnameView);
@@ -110,8 +121,86 @@ public class CreateNewPersonActivity extends Activity {
 
 
     private void getImage() {
-        //TODO wejscie Dialog z katalogu/z Kamery jak z katalogu to wybor pliku jak z kamery to Intencja, zrobic Dialog
+
+        ImagePickerDialog imagePickerDialog=new ImagePickerDialog();
+        imagePickerDialog.show(getSupportFragmentManager(),getResources().getString(R.string.imagedialogString));
+
+
     }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_PHOTO_GALLERY);
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
+
+    public void startCamera() {
+        checkNameField();
+        File photo = null;
+
+        Intent intent = new Intent("android.media.action.SELECT_PHOTO_CAPTURE");
+        photo = createPhotoFile();
+        if (photo != null) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+            selectedImageUri = Uri.fromFile(photo);
+            startActivityForResult(intent, SELECT_PHOTO_CAPTURE);
+        }
+    }
+
+    private void checkNameField() {
+        if(personDataHolder.getPerson().getName().equals(null)){
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.put_name_first),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private File createPhotoFile() {
+        File photo;
+        if (android.os.Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED)) {
+            photo = new File(android.os.Environment
+                    .getExternalStorageDirectory(), personDataHolder.getPerson().getName());
+        } else {
+            photo = new File(getCacheDir(),  personDataHolder.getPerson().getName());
+        }
+        return photo;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+        switch(requestCode) {
+            case SELECT_PHOTO_GALLERY:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    doOnUriRecived(selectedImage);
+                }
+                break;
+            case SELECT_PHOTO_CAPTURE:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = selectedImageUri;
+                    doOnUriRecived(selectedImage);
+                }
+                break;
+
+        }
+    }
+
+    private void doOnUriRecived(Uri selectedImage) {
+        personDataHolder.getPerson().setImage(selectedImage);
+        setBitmap(selectedImage);
+        SmallImageFromUri smallImageFromUri=new SmallImageFromUri(getContentResolver(),getResources().getDisplayMetrics().density);
+        personDataHolder.getPerson().setSmallImage(smallImageFromUri.getScaledBitmap(selectedImage));
+    }
+
 
     private boolean validateInput(EditText editText){
         return validators.get(editText).validate(editText.getText());
@@ -140,6 +229,24 @@ public class CreateNewPersonActivity extends Activity {
         }
     }
 
+    private void sendResultIntent() {
+        setPersonData();
+        ParcelPerson parcelPerson=new ParcelPerson(personDataHolder.getPerson());
+        Intent resultIntent=new Intent();
+        resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON,parcelPerson);
+        NEW_INTENT_FLAG=true;
+        finish();
+    }
+
+    private void setPersonData() {
+        personDataHolder.getPerson().setImage(imageUri);
+        personDataHolder.getPerson().setName(nameEdit.getText().toString());
+        personDataHolder.getPerson().setSurname(surnameEdit.getText().toString());
+        personDataHolder.getPerson().setEmail(mailEdit.getText().toString());
+        personDataHolder.getPerson().setPhoneNumber(phoneEdit.getText().toString());
+    }
+
+
     private void createWrongDialog(String text) {
         final WrongValueDialog wrongValueDialog=new WrongValueDialog(CreateNewPersonActivity.this,text);
         wrongValueDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -153,7 +260,8 @@ public class CreateNewPersonActivity extends Activity {
     }
 
 
-class saveButListener implements View.OnClickListener{
+
+    class saveButListener implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
@@ -194,18 +302,6 @@ class saveButListener implements View.OnClickListener{
     }
 }
 
-    private void sendResultIntent() {
-        personDataHolder.getPerson().setImage(imageUri);
-        personDataHolder.getPerson().setName(nameEdit.getText().toString());
-        personDataHolder.getPerson().setSurname(surnameEdit.getText().toString());
-        personDataHolder.getPerson().setEmail(mailEdit.getText().toString());
-        personDataHolder.getPerson().setPhoneNumber(phoneEdit.getText().toString());
-        ParcelPerson parcelPerson=new ParcelPerson(personDataHolder.getPerson());
-        Intent resultIntent=new Intent();
-        resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON,parcelPerson);
-        NEW_INTENT_FLAG=true;
-        finish();
-    }
 
 
 }

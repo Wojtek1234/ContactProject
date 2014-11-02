@@ -6,7 +6,12 @@
     <string name="addButtonText">Dodaj</string>
     <string name="delateButtonText">Kasuj</string>
     <string name="editButtonText">Edytuj</string>
-    <string name="pick_image_source">Pick Image Resource</string>
-    <string name="from_gallery">Pick from gallery</string>
-
+    <string name="pick_image_source">Wybierz źródło zdjęcia</string>
+    <string name="from_gallery">Wybierz z galerii</string>
+    <string name="wrong_email">Nieprawidłowy adres e-mail \n Chcesz poprawić?</string>
+    <string name="wrong_phone">Nieprawidłowy numer telefonu \n Chcesz poprawić?</string>
+    <string name="wrong_both">Nieprawidłowy email i numer telefonu \n Chcesz poprawić?</string>
+    <string name="from_camera">Zrób zdjęcie</string>
+    <string name="imagedialogString">imageDialogID</string>
+    <string name="put_name_first">Please, insert name first</string>
 </resources>
