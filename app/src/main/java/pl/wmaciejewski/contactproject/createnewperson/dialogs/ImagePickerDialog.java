@@ -47,7 +47,7 @@ public class ImagePickerDialog extends DialogFragment {
                 Drawable drawable = getActivity().getResources().getDrawable(R.drawable.gallery);
 
                 // set the bounds to place the drawable a bit right
-                drawable.setBounds((int) (drawable.getIntrinsicWidth() * 0.5), 0, (int) (drawable.getIntrinsicWidth() * 1.5), drawable.getIntrinsicHeight());
+                drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() ), drawable.getIntrinsicHeight());
                 button.setCompoundDrawables(drawable, null, null, null);
 
                 Button button2 = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
@@ -58,7 +58,7 @@ public class ImagePickerDialog extends DialogFragment {
                 Drawable drawable2 = getActivity().getResources().getDrawable(R.drawable.camera);
 
                 // set the bounds to place the drawable a bit right
-                drawable2.setBounds((int) (drawable.getIntrinsicWidth() * 0.5), 0, (int) (drawable.getIntrinsicWidth() * 1.5), drawable.getIntrinsicHeight());
+                drawable2.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() ), drawable.getIntrinsicHeight());
                 button2.setCompoundDrawables(drawable, null, null, null);
             }
         });

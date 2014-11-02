@@ -66,7 +66,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
 
 
         } else {
-            initGUI(parcelable.getPerson());
+            initGUI(personDataHolder.getPerson());
         }
 
 
@@ -138,14 +138,18 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-
+        startCamera();
     }
 
     public void startCamera() {
-        checkNameField();
+        if(checkNameField()) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.put_name_first),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         File photo = null;
 
-        Intent intent = new Intent("android.media.action.SELECT_PHOTO_CAPTURE");
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         photo = createPhotoFile();
         if (photo != null) {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
@@ -154,11 +158,10 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         }
     }
 
-    private void checkNameField() {
-        if(personDataHolder.getPerson().getName().equals(null)){
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.put_name_first),
-                    Toast.LENGTH_SHORT).show();
-        }
+    private boolean checkNameField() {
+        return (nameEdit.getText().toString().equals(""));
+
+
     }
 
     private File createPhotoFile() {
@@ -166,9 +169,9 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
             photo = new File(android.os.Environment
-                    .getExternalStorageDirectory(), personDataHolder.getPerson().getName());
+                    .getExternalStorageDirectory(), nameEdit.getText().toString());
         } else {
-            photo = new File(getCacheDir(),  personDataHolder.getPerson().getName());
+            photo = new File(getCacheDir(),  nameEdit.getText().toString());
         }
         return photo;
     }

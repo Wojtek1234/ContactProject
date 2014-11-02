@@ -43,7 +43,7 @@ public class SmallImageFromUri {
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri);
             Matrix m = new Matrix();
-            m.setRectToRect(new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight()), new RectF(0, 0, sizes.get(scale), sizes.get(scale)), Matrix.ScaleToFit.CENTER);
+            m.setRectToRect(new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight()), new RectF(0, 0, sizes.get( new Double(scale)), sizes.get( new Double(scale))), Matrix.ScaleToFit.CENTER);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true).compress(Bitmap.CompressFormat.PNG, 100, stream);
             return stream.toByteArray();
