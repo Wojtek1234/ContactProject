@@ -7,5 +7,5 @@ package pl.wmaciejewski.contactproject.modelView;
  */
 public class ViewModel {
 
-    private CustomAdapter customAdapter;
+    private PersonListAdapter customAdapter;
 }
