@@ -45,10 +45,12 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
     private Button saveButton;
     private Uri imageUri;
     private Bitmap smallImage;
-    private HashMap<EditText,Validator> validators;
-    private boolean areWeGoing=false;
+    private HashMap<EditText, Validator> validators;
+    private boolean areWeGoing = false;
     private Uri selectedImageUri;
+    private CreatePhotoFile createPhotoFile;
 
+    //TODO wyrefactorować klasy odpowiedzialne za zdjecia i inne glupoty tak zeby nie bylo tego wszystkigo tutaj
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +64,10 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
             } else {
                 doOnCreateIntent();
             }
-            NEW_INTENT_FLAG=false;
-
-
+            NEW_INTENT_FLAG = false;
         } else {
             initGUI(personDataHolder.getPerson());
         }
-
-
     }
 
     private void doOnCreateIntent() {
@@ -78,17 +76,14 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         initGUI();
     }
 
-
     private void initGUI() {
         initializeComponents();
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getImage();
             }
         });
-
     }
 
     private void initializeComponents() {
@@ -96,17 +91,14 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         setSaveButtonListener();
         setUpValidators();
     }
-
     private void setUpValidators() {
-        validators=new HashMap<EditText, Validator>();
-        validators.put(mailEdit,new EmailValidator());
-        validators.put(phoneEdit,new PhoneNumberValidator());
+        validators = new HashMap<EditText, Validator>();
+        validators.put(mailEdit, new EmailValidator());
+        validators.put(phoneEdit, new PhoneNumberValidator());
     }
 
-
-
     private void setSaveButtonListener() {
-        saveButton.setOnClickListener(new saveButListener());
+        saveButton.setOnClickListener(new SaveButListener());
     }
 
     private void setUpComponents() {
@@ -115,17 +107,12 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         mailEdit = (EditText) findViewById(R.id.editEmailView);
         phoneEdit = (EditText) findViewById(R.id.phoneEditView);
         imageView = (ImageView) findViewById(R.id.imagePersonView);
-        saveButton=(Button)findViewById(R.id.save_button);
+        saveButton = (Button) findViewById(R.id.save_button);
     }
 
-
-
     private void getImage() {
-
-        ImagePickerDialog imagePickerDialog=new ImagePickerDialog();
-        imagePickerDialog.show(getSupportFragmentManager(),getResources().getString(R.string.imagedialogString));
-
-
+        ImagePickerDialog imagePickerDialog = new ImagePickerDialog();
+        imagePickerDialog.show(getSupportFragmentManager(), getResources().getString(R.string.imagedialogString));
     }
 
 
@@ -142,53 +129,42 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
     }
 
     public void startCamera() {
-        if(checkNameField()) {
+        if (checkNameField()) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.put_name_first),
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        File photo = null;
+        File photo ;
 
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        photo = createPhotoFile();
-        if (photo != null) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-            selectedImageUri = Uri.fromFile(photo);
-            startActivityForResult(intent, SELECT_PHOTO_CAPTURE);
-        }
+        photo = createPhotoFile.getFile();
+        if (photo != null) startCatchCamerIntent(photo, intent);
+    }
+
+    private void startCatchCamerIntent(File photo, Intent intent) {
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+        selectedImageUri = Uri.fromFile(photo);
+        startActivityForResult(intent, SELECT_PHOTO_CAPTURE);
     }
 
     private boolean checkNameField() {
         return (nameEdit.getText().toString().equals(""));
-
-
     }
 
-    private File createPhotoFile() {
-        File photo;
-        if (android.os.Environment.getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED)) {
-            photo = new File(android.os.Environment
-                    .getExternalStorageDirectory(), nameEdit.getText().toString());
-        } else {
-            photo = new File(getCacheDir(),  nameEdit.getText().toString());
-        }
-        return photo;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        switch(requestCode) {
+        switch (requestCode) {
             case SELECT_PHOTO_GALLERY:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     doOnUriRecived(selectedImage);
                 }
                 break;
             case SELECT_PHOTO_CAPTURE:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri selectedImage = selectedImageUri;
                     doOnUriRecived(selectedImage);
                 }
@@ -200,12 +176,12 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
     private void doOnUriRecived(Uri selectedImage) {
         personDataHolder.getPerson().setImage(selectedImage);
         setBitmap(selectedImage);
-        SmallImageFromUri smallImageFromUri=new SmallImageFromUri(getContentResolver(),getResources().getDisplayMetrics().density);
+        SmallImageFromUri smallImageFromUri = new SmallImageFromUri(getContentResolver(), getResources().getDisplayMetrics().density);
         personDataHolder.getPerson().setSmallImage(smallImageFromUri.getScaledBitmap(selectedImage));
     }
 
 
-    private boolean validateInput(EditText editText){
+    private boolean validateInput(EditText editText) {
         return validators.get(editText).validate(editText.getText());
     }
 
@@ -216,6 +192,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         mailEdit.setText(person.getEmail());
         phoneEdit.setText(person.getPhoneNumber());
         setBitmap(person.getImage());
+        this.createPhotoFile = new CreatePhotoFile(this.nameEdit, getCacheDir());
 
 
     }
@@ -234,10 +211,10 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
 
     private void sendResultIntent() {
         setPersonData();
-        ParcelPerson parcelPerson=new ParcelPerson(personDataHolder.getPerson());
-        Intent resultIntent=new Intent();
-        resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON,parcelPerson);
-        NEW_INTENT_FLAG=true;
+        ParcelPerson parcelPerson = new ParcelPerson(personDataHolder.getPerson());
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON, parcelPerson);
+        NEW_INTENT_FLAG = true;
         finish();
     }
 
@@ -251,26 +228,25 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
 
 
     private void createWrongDialog(String text) {
-        final WrongValueDialog wrongValueDialog=new WrongValueDialog(CreateNewPersonActivity.this,text);
+        final WrongValueDialog wrongValueDialog = new WrongValueDialog(CreateNewPersonActivity.this, text);
         wrongValueDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                areWeGoing=wrongValueDialog.isResult();
-                if(areWeGoing) sendResultIntent();
+                areWeGoing = wrongValueDialog.isResult();
+                if (areWeGoing) sendResultIntent();
             }
         });
         wrongValueDialog.show();
     }
 
 
+    class SaveButListener implements View.OnClickListener {
 
-    class saveButListener implements View.OnClickListener{
-
-    @Override
-    public void onClick(View view) {
-            int x=0;
-            x=doOnEmail();
-            x=x+doOnPhone();
+        @Override
+        public void onClick(View view) {
+            int x = 0;
+            x = doOnEmail();
+            x = x + doOnPhone();
             switch (x) {
                 case 1:
                     createWrongDialog(getResources().getString(R.string.wrong_email));
@@ -287,24 +263,19 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
             }
 
 
-
-
         }
 
 
+        private int doOnEmail() {
+            if (!validateInput(mailEdit)) return 1;
+            else return 0;
+        }
 
-
-    private int doOnEmail() {
-        if(!validateInput(mailEdit)) return 1;
-        else return 0;
+        private int doOnPhone() {
+            if (!validateInput(phoneEdit)) return 2;
+            else return 0;
+        }
     }
-
-    private int doOnPhone() {
-        if(!validateInput(phoneEdit)) return 2;
-        else return 0;
-    }
-}
-
 
 
 }
