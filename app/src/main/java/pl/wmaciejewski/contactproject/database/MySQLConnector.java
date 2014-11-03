@@ -64,6 +64,16 @@ public class MySQLConnector extends SQLiteOpenHelper {
     // Table Create Statements
     private static final String DATABASE_NAME = "conntacts.db";
     private static final int DATABASE_VERSION = 1;
+    private static MySQLConnector ourInstance;
+
+
+    public static MySQLConnector getInstance(Context context) {
+        if(ourInstance == null){
+            ourInstance = new MySQLConnector(context);
+            return ourInstance;
+        }else  return ourInstance;
+    }
+
 
     public MySQLConnector(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

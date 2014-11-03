@@ -7,7 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.sql.SQLException;
+
 import pl.wmaciejewski.contactproject.createnewperson.CreateNewPersonActivity;
+import pl.wmaciejewski.contactproject.database.DatabaseProvider;
+import pl.wmaciejewski.contactproject.modelView.PersonListAdapter;
+import pl.wmaciejewski.contactproject.modelView.ViewModel;
 
 
 public class MainActivity extends Activity {
@@ -16,8 +21,12 @@ public class MainActivity extends Activity {
     public static final int REQUEST_CREATE_PERSON_NUMBER =100 ;
     public static final String REQUEST_CREATE_PERSON="REQUEST_MASSAGE";
 
+    private ViewModel viewModel;
     private ListView list;
     private Button addBut,removeBut,editBut;
+    private PersonListAdapter personListAdapter;
+    private DatabaseProvider databaseProvider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +37,13 @@ public class MainActivity extends Activity {
     }
 
     private void initializeGUI() {
+
+        databaseProvider=new DatabaseProvider(getApplicationContext());
+        openDataBase(databaseProvider);
+        viewModel=ViewModel.getInstance(databaseProvider);
         list=(ListView)findViewById(R.id.listview);
+        this.personListAdapter=new PersonListAdapter(this,R.layout.single_contact_list_layout,viewModel.getPersonList());
+        list.setAdapter(personListAdapter);
         addBut=(Button)findViewById(R.id.addButton);
         addBut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +53,20 @@ public class MainActivity extends Activity {
         });
         removeBut=(Button)findViewById(R.id.removeButton);
         removeBut=(Button)findViewById(R.id.removeButton);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseProvider.close();
+    }
+
+    private void openDataBase(DatabaseProvider databaseProvider) {
+        try {
+            databaseProvider.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void openActivityForResult() {

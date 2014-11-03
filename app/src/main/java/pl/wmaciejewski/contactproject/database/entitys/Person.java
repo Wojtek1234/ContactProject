@@ -18,7 +18,15 @@ public class Person {
     private String phoneNumber;
     private Uri image;
     private byte[] smallImage;
+    private boolean checked=false;
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     public Person(String name, String surname, String email, String phoneNumber, String imageUri, byte[] imageArray, Long groupId) {
         this.id=0;

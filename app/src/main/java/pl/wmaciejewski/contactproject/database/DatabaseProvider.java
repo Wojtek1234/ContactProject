@@ -17,7 +17,7 @@ public class DatabaseProvider {
     private SQLiteDatabase database;
 
     public DatabaseProvider(Context context) {
-        this.sqlConnector = new MySQLConnector(context);
+        this.sqlConnector =  MySQLConnector.getInstance(context);
     }
 
     public void open() throws SQLException {
