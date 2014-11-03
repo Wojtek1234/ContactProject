@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import pl.wmaciejewski.contactproject.createnewperson.CreateNewPersonActivity;
 import pl.wmaciejewski.contactproject.database.DatabaseProvider;
+import pl.wmaciejewski.contactproject.modelView.ParcelPerson;
 import pl.wmaciejewski.contactproject.modelView.PersonListAdapter;
 import pl.wmaciejewski.contactproject.modelView.ViewModel;
 
@@ -73,17 +74,22 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), CreateNewPersonActivity.class);
 
 
-        intent.putExtra("dupa","dupa");
 
-        startActivity(intent);
+
+        startActivityForResult(intent,REQUEST_NEW_PERSON);
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_NEW_PERSON){
             if(resultCode==REQUEST_CREATE_PERSON_NUMBER){
-
+                ParcelPerson parcelPerson=(ParcelPerson)data.getParcelableExtra(REQUEST_CREATE_PERSON);
+                viewModel.addPerson(parcelPerson.getPerson());
+                personListAdapter.setList(viewModel.getPersonList());
+                personListAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -2,9 +2,9 @@ package pl.wmaciejewski.contactproject.createnewperson;
 
 
 import android.content.DialogInterface;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -56,18 +56,21 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_person);
         Intent intent = getIntent();
-
-        ParcelPerson parcelable = intent.getExtras().getParcelable("person");
-        if (NEW_INTENT_FLAG) {
-            if (parcelable != null) {
-                initGUI(parcelable.getPerson());
+        try{
+            ParcelPerson parcelable = intent.getExtras().getParcelable("person");
+            if (NEW_INTENT_FLAG) {
+                if (parcelable != null) {
+                    initGUI(parcelable.getPerson());
+                }
+                NEW_INTENT_FLAG = false;
             } else {
-                doOnCreateIntent();
+                initGUI(personDataHolder.getPerson());
             }
-            NEW_INTENT_FLAG = false;
-        } else {
-            initGUI(personDataHolder.getPerson());
+        }catch (NullPointerException ne){
+            doOnCreateIntent();
         }
+
+
     }
 
     private void doOnCreateIntent() {
@@ -214,12 +217,20 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         ParcelPerson parcelPerson = new ParcelPerson(personDataHolder.getPerson());
         Intent resultIntent = new Intent();
         resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON, parcelPerson);
+        setResult(MainActivity.REQUEST_CREATE_PERSON_NUMBER,resultIntent);
         NEW_INTENT_FLAG = true;
         finish();
     }
 
     private void setPersonData() {
         personDataHolder.getPerson().setImage(imageUri);
+        try {
+            int  i=personDataHolder.getPerson().getSmallImage().length;
+        }catch(NullPointerException ne){
+            SmallImageFromUri smallImageFromUri = new SmallImageFromUri(getContentResolver(), getResources().getDisplayMetrics().density);
+            personDataHolder.getPerson().setSmallImage(smallImageFromUri.getScaledBitmap(BitmapFactory.decodeResource(getResources(),
+                    R.drawable.no_photo)));
+        }
         personDataHolder.getPerson().setName(nameEdit.getText().toString());
         personDataHolder.getPerson().setSurname(surnameEdit.getText().toString());
         personDataHolder.getPerson().setEmail(mailEdit.getText().toString());

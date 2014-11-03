@@ -11,8 +11,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
-import pl.wmaciejewski.contactproject.R;
-
 /**
  * Created by Wojtek on 2014-11-02.
  */
@@ -54,6 +52,16 @@ public class SmallImageFromUri {
         }
 
 
+    }
+
+    public byte[] getScaledBitmap(Bitmap bitmap){
+
+
+            Matrix m = new Matrix();
+            m.setRectToRect(new RectF(0, 0, bitmap.getWidth(), bitmap.getHeight()), new RectF(0, 0, sizes.get( new Double(scale)), sizes.get( new Double(scale))), Matrix.ScaleToFit.CENTER);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true).compress(Bitmap.CompressFormat.PNG, 100, stream);
+            return stream.toByteArray();
     }
 
 }

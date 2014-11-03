@@ -27,15 +27,19 @@ public class PersonListAdapter extends ArrayAdapter<Person> implements SectionIn
 
     private final Activity context;
     private final BitmapByteChanger bitmapByteChanger;
+
     private List<Person> list;
     String[] sections;
     private HashMap<String, Integer> mapIndex;
+
+
 
     public PersonListAdapter(Activity context, int resource, List<Person> objects) {
         super(context, resource, objects);
         this.list=objects;
         this.context=context;
         this.bitmapByteChanger=new BitmapByteChanger();
+        mapIndex=new HashMap<String, Integer>();
         if(this.list.size()>0){
             for (int x = 0; x < this.list.size(); x++) {
                 String name = this.list.get(x).getName();
@@ -71,11 +75,11 @@ public class PersonListAdapter extends ArrayAdapter<Person> implements SectionIn
         final Person person=getPerson(position);
 
 
-        TextView textView=viewHolder.textView;
+        TextView textView=(TextView)viewHolder.textView;
         textView.setText(person.getName()+" "+person.getSurname());
-        ImageView iv= viewHolder.imageView;
+        ImageView iv= (ImageView)viewHolder.imageView;
         iv.setImageBitmap(bitmapByteChanger.ByteArrayToBitmap(person.getSmallImage()));
-        CheckBox checkBox=viewHolder.checkBox;
+        CheckBox checkBox=(CheckBox)viewHolder.checkBox;
         checkBox.setChecked(person.isChecked());
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -84,6 +88,14 @@ public class PersonListAdapter extends ArrayAdapter<Person> implements SectionIn
             }
         });
         return view;
+    }
+
+    public List<Person> getList() {
+        return list;
+    }
+
+    public void setList(List<Person> list) {
+        this.list = list;
     }
 
     private Person getPerson(int position) {
