@@ -18,4 +18,5 @@
     <string name="imagedialogString" type="id">imageDialogID</string>
     <string name="put_name_first">Please, insert name first</string>
     <string name="no_photo_warn">Couldn\'t create photo file</string>
+    <string name="choose_action">Choose Action</string>
 </resources>
