@@ -22,11 +22,13 @@ public class GroupDAO extends abstractDAO<Group> {
     }
 
 
+
+
     @Override
-    public void create(Group entity) {
+    protected ContentValues getContentValues(Group entity) {
         ContentValues values = new ContentValues();
         values.put(collumns[1], entity.getGroupName());
-        database.insertOrThrow(MY_TABLE, null, values);
+        return  values;
     }
 
 
@@ -37,6 +39,21 @@ public class GroupDAO extends abstractDAO<Group> {
         cursor.moveToFirst();
         List<Group> groups = rewriteToList(cursor);
         return groups;
+    }
+
+    @Override
+    public void updateEntity(Group entity) {
+
+        String strFilter = collumns[0]+"=" + entity.getId();
+        ContentValues values = new ContentValues();
+        values.put(collumns[1], entity.getGroupName());
+        database.update(MY_TABLE, values, strFilter, null);
+
+    }
+
+    @Override
+    protected String getStringFilters(Group entity) {
+        return collumns[0]+"=" + entity.getId();
     }
 
 

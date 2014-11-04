@@ -4,9 +4,7 @@ package pl.wmaciejewski.contactproject.database.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import pl.wmaciejewski.contactproject.database.MySQLConnector;
@@ -25,20 +23,6 @@ public class PersonDAO extends abstractDAO<Person> {
         MY_TABLE = MySQLConnector.TABLE_PERSON;
     }
 
-    @Override
-    public void create(Person entity) {
-        ContentValues values = new ContentValues();
-        values.put(collumns[1], entity.getName());
-        values.put(collumns[2], entity.getSurname());
-        values.put(collumns[3], entity.getEmail());
-        values.put(collumns[4], entity.getPhoneNumber());
-        if (entity.getImage() == null) values.put(collumns[5], (byte[]) null);
-        else values.put(collumns[5], entity.getImage().toString());
-        values.put(collumns[6], entity.getSmallImage());
-        values.put(collumns[7], entity.getGroupId());
-
-        database.insertOrThrow(MY_TABLE, null, values);
-    }
 
 
 
@@ -55,6 +39,27 @@ public class PersonDAO extends abstractDAO<Person> {
             persons.add(person);
         }
         return persons;
+    }
+
+
+    @Override
+    protected String getStringFilters(Person entity) {
+        return collumns[0]+"=" + entity.getId();
+    }
+
+
+    @Override
+    protected ContentValues getContentValues(Person entity) {
+        ContentValues values = new ContentValues();
+        values.put(collumns[1], entity.getName());
+        values.put(collumns[2], entity.getSurname());
+        values.put(collumns[3], entity.getEmail());
+        values.put(collumns[4], entity.getPhoneNumber());
+        if (entity.getImage() == null) values.put(collumns[5], (byte[]) null);
+        else values.put(collumns[5], entity.getImage().toString());
+        values.put(collumns[6], entity.getSmallImage());
+        values.put(collumns[7], entity.getGroupId());
+        return values;
     }
 
 

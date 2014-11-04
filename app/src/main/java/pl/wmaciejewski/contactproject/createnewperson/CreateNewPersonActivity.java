@@ -38,6 +38,7 @@ import pl.wmaciejewski.contactproject.modelView.ParcelPerson;
 public class CreateNewPersonActivity extends FragmentActivity implements ImagePickerDialog.NoticeDialogListener {
 
     private static boolean NEW_INTENT_FLAG = true;
+    private int REQUEST_CODE;
     private static final int SELECT_PHOTO_GALLERY = 100;
     private static final int SELECT_PHOTO_CAPTURE = 101;
 
@@ -63,13 +64,16 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
             if (NEW_INTENT_FLAG) {
                 if (parcelable != null) {
                     initGUI(parcelable.getPerson());
+                    REQUEST_CODE=MainActivity.REQUEST_EDIT_PERSON_NUMBER;
                 }
                 NEW_INTENT_FLAG = false;
             } else {
                 initGUI(personDataHolder.getPerson());
             }
+
         }catch (NullPointerException ne){
             doOnCreateIntent();
+            REQUEST_CODE=MainActivity.REQUEST_CREATE_PERSON_NUMBER;
         }
 
 
@@ -200,6 +204,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
 
     private void initGUI(Person person) {
         initializeComponents();
+        this.personDataHolder.setPerson(person);
         nameEdit.setText(person.getName());
         surnameEdit.setText(person.getSurname());
         mailEdit.setText(person.getEmail());
@@ -227,7 +232,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         ParcelPerson parcelPerson = new ParcelPerson(personDataHolder.getPerson());
         Intent resultIntent = new Intent();
         resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON, parcelPerson);
-        setResult(MainActivity.REQUEST_CREATE_PERSON_NUMBER,resultIntent);
+        setResult(REQUEST_CODE,resultIntent);
         NEW_INTENT_FLAG = true;
         finish();
     }

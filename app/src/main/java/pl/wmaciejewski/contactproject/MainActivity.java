@@ -20,6 +20,7 @@ public class MainActivity extends Activity {
 
     public static final int REQUEST_NEW_PERSON =267 ;
     public static final int REQUEST_CREATE_PERSON_NUMBER =100 ;
+    public static final int REQUEST_EDIT_PERSON_NUMBER =100 ;
     public static final String REQUEST_CREATE_PERSON="REQUEST_MASSAGE";
 
     private ViewModel viewModel;

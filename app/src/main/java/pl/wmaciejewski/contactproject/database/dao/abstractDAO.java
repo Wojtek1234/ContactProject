@@ -1,5 +1,6 @@
 package pl.wmaciejewski.contactproject.database.dao;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -19,7 +20,24 @@ public abstract class abstractDAO<T> {
         this.database = database;
     }
 
-    public abstract void create(T entity);
+    public  void create(T entity){
+        ContentValues values = getContentValues(entity);
+        database.insertOrThrow(MY_TABLE, null, values);
+    }
+    public  void updateEntity(T entity){
+
+        String strFilter = getStringFilters(entity);
+        ContentValues values = getContentValues(entity);
+        database.update(MY_TABLE, values, strFilter, null);
+
+    }
+
+    protected abstract String getStringFilters(T entity);
+
+
+    protected abstract ContentValues getContentValues(T entity);
+
+
 
     public T getById(Long id) {
         Cursor cursor = database.query(MY_TABLE, collumns, collumns[0] + "=" + id, null, null, null, null, null);
@@ -35,6 +53,8 @@ public abstract class abstractDAO<T> {
     }
 
     public void removeById(Long id){database.delete(MY_TABLE,collumns[0] + "=?",new String[]{Long.toString(id)});}
+
+
 
     public List<T> getAll() {
         Cursor cursor = database.query(MY_TABLE,
@@ -59,5 +79,5 @@ public abstract class abstractDAO<T> {
 
     protected abstract T cursorToEntity(Cursor cursor);
 
-
+    
 }

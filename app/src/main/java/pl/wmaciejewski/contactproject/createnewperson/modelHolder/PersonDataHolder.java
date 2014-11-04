@@ -32,6 +32,7 @@ public class PersonDataHolder {
     }
 
     public void clearPersonFileds(){
+        this.person.setId(0);
         this.person.setName(null);
         this.person.setSurname(null);
         this.person.setEmail(null);
