@@ -9,6 +9,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:src="@drawable/email"
+        android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
         android:id="@+id/sendEmailButton"/>
     <ImageButton
@@ -17,6 +18,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:src="@drawable/sms"
+        android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
         android:id="@+id/sendSMSButton"/>
     <ImageButton
@@ -25,6 +27,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:src="@drawable/phone"
+        android:background="?android:selectableItemBackground"
         android:layout_gravity="center"
         android:id="@+id/callButton"/>
 
