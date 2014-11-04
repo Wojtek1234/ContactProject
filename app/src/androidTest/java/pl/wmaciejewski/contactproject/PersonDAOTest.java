@@ -34,7 +34,7 @@ public class PersonDAOTest extends AndroidTestCase {
 
 
         this.context = new RenamingDelegatingContext(getContext(), "test_");
-        this.databaseProvider = new DatabaseProvider(context);
+        this.databaseProvider =DatabaseProvider.getInstance(context);
         this.databaseProvider.open();
         this.groupDao = new GroupDAO(databaseProvider.getDatabase());
         this.groupDao.removeAll();
@@ -137,5 +137,20 @@ public class PersonDAOTest extends AndroidTestCase {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
+    }
+
+    public void testUpdate(){
+        Bitmap icon = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.no_photo);
+        this.groupDao.create(TEST_NAME);
+        List<Group> groups = this.groupDao.getAll();
+        this.personDAO.create(new Person("Janek", "Wisniewski", "janek@wisniewski.pl", "666666666", null, setPhpotoAsByteArray(icon), groups.get(0).getId()));
+        Person person=this.personDAO.getAll().get(0);
+
+        person.setName("Jan");
+        this.personDAO.updateEntity(person);
+        Person person1=this.personDAO.getAll().get(0);
+
+        assertEquals(person1,person);
     }
 }

@@ -29,7 +29,7 @@ public class ParcelPersonTest extends AndroidTestCase {
         super.setUp();
 
         this.context = new RenamingDelegatingContext(getContext(), "test_");
-        this.databaseProvider = new DatabaseProvider(context);
+        this.databaseProvider =DatabaseProvider.getInstance(context);
         this.databaseProvider.open();
         this.groupDao = new GroupDAO(databaseProvider.getDatabase());
         this.groupDao.removeAll();
