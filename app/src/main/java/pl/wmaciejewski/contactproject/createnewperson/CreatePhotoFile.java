@@ -4,6 +4,8 @@ import android.widget.EditText;
 
 import java.io.File;
 
+import pl.wmaciejewski.contactproject.exceptions.CouldntCreatePhoto;
+
 /**
  * Created by w.maciejewski on 2014-11-03.
  */
@@ -16,11 +18,11 @@ public class CreatePhotoFile {
         this.catcheDir = catcheDir;
     }
 
-    public File getFile(){
+    public File getFile() throws CouldntCreatePhoto {
         return createPhotoFile();
     }
 
-    private File createPhotoFile() {
+    private File createPhotoFile() throws CouldntCreatePhoto {
         File photo;
         if (android.os.Environment.getExternalStorageState().equals(
                 android.os.Environment.MEDIA_MOUNTED)) {
@@ -28,6 +30,9 @@ public class CreatePhotoFile {
                     .getExternalStorageDirectory(), editText.getText().toString());
         } else {
             photo = new File(this.catcheDir,  this.editText.getText().toString());
+        }
+        if(photo==null){
+            throw new CouldntCreatePhoto("Could create Photo");
         }
         return photo;
     }

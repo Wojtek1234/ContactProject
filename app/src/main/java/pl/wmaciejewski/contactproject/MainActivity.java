@@ -39,10 +39,11 @@ public class MainActivity extends Activity {
 
     private void initializeGUI() {
 
-        databaseProvider=new DatabaseProvider(getApplicationContext());
+        databaseProvider=DatabaseProvider.getInstance(getApplicationContext());
         openDataBase(databaseProvider);
-        viewModel=ViewModel.getInstance(databaseProvider);
+        viewModel=new ViewModel(databaseProvider);
         list=(ListView)findViewById(R.id.listview);
+        list.setFastScrollEnabled(true);
         this.personListAdapter=new PersonListAdapter(this,R.layout.single_contact_list_layout,viewModel.getPersonList());
         list.setAdapter(personListAdapter);
         addBut=(Button)findViewById(R.id.addButton);
@@ -86,10 +87,10 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==REQUEST_NEW_PERSON){
             if(resultCode==REQUEST_CREATE_PERSON_NUMBER){
-                ParcelPerson parcelPerson=(ParcelPerson)data.getParcelableExtra(REQUEST_CREATE_PERSON);
+                ParcelPerson parcelPerson=data.getParcelableExtra(REQUEST_CREATE_PERSON);
                 viewModel.addPerson(parcelPerson.getPerson());
-                personListAdapter.setList(viewModel.getPersonList());
-                personListAdapter.notifyDataSetChanged();
+                this.personListAdapter=new PersonListAdapter(this,R.layout.single_contact_list_layout,viewModel.getPersonList());
+                list.setAdapter(personListAdapter);
             }
         }
     }

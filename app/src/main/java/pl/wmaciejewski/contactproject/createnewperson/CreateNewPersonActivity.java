@@ -30,6 +30,7 @@ import pl.wmaciejewski.contactproject.createnewperson.validators.EmailValidator;
 import pl.wmaciejewski.contactproject.createnewperson.validators.PhoneNumberValidator;
 import pl.wmaciejewski.contactproject.createnewperson.validators.Validator;
 import pl.wmaciejewski.contactproject.database.entitys.Person;
+import pl.wmaciejewski.contactproject.exceptions.CouldntCreatePhoto;
 import pl.wmaciejewski.contactproject.modelView.ParcelPerson;
 
 
@@ -140,8 +141,14 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         File photo ;
 
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        photo = createPhotoFile.getFile();
-        if (photo != null) startCatchCamerIntent(photo, intent);
+        try {
+            photo = createPhotoFile.getFile();
+            startCatchCamerIntent(photo, intent);
+        } catch (CouldntCreatePhoto couldntCreatePhoto) {
+            couldntCreatePhoto.printStackTrace();
+            return;
+        }
+
     }
 
     private void startCatchCamerIntent(File photo, Intent intent) {

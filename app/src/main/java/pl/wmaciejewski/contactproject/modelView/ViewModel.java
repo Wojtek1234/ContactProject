@@ -18,14 +18,9 @@ public class ViewModel {
     private GroupDAO groupDAO;
     private PersonListAdapter personListAdapter;
 
-    public static ViewModel getInstance(DatabaseProvider databaseProvider) {
-        if(ourInstance == null){
-            ourInstance = new ViewModel(databaseProvider);
-            return ourInstance;
-        }else  return ourInstance;
-    }
 
-    private ViewModel(DatabaseProvider databaseProvider) {
+
+    public ViewModel(DatabaseProvider databaseProvider) {
 
         personDAO=new PersonDAO(databaseProvider.getDatabase());
         groupDAO=new GroupDAO(databaseProvider.getDatabase());

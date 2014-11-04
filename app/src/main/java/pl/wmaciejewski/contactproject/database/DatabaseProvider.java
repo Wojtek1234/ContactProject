@@ -12,12 +12,19 @@ public class DatabaseProvider {
 
 
     private final MySQLConnector sqlConnector;
-
+    private static DatabaseProvider instance = null;
 
     private SQLiteDatabase database;
 
-    public DatabaseProvider(Context context) {
-        this.sqlConnector =  MySQLConnector.getInstance(context);
+    public static DatabaseProvider getInstance(Context context) {
+        if(instance == null){
+            instance = new DatabaseProvider(context);
+            return instance;
+        }else  return instance;
+    }
+
+    private DatabaseProvider(Context context) {
+        this.sqlConnector =  new MySQLConnector(context);
     }
 
     public void open() throws SQLException {

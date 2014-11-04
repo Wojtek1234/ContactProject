@@ -69,6 +69,7 @@ public class PersonListAdapter extends ArrayAdapter<Person> implements SectionIn
             viewHolder.textView=(TextView)view.findViewById(R.id.nameAndSurnameTV);
             viewHolder.checkBox=(CheckBox)view.findViewById(R.id.checkBoxContact);
             viewHolder.imageView=(ImageView)view.findViewById(R.id.imageSmallContact);
+            view.setTag(viewHolder);
         }else{
             viewHolder=(ViewHolder)convertView.getTag();
         }
@@ -120,5 +121,11 @@ public class PersonListAdapter extends ArrayAdapter<Person> implements SectionIn
         TextView textView;
         ImageView imageView;
         CheckBox checkBox;
+    }
+
+    public void swapPersones(List<Person> persons) {
+        this.list = persons;
+        notifyDataSetChanged();
+
     }
 }

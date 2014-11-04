@@ -34,7 +34,7 @@ public abstract class abstractDAO<T> {
         database.delete(MY_TABLE, null, null);
     }
 
-
+    public void removeById(Long id){database.delete(MY_TABLE,collumns[0] + "=?",new String[]{Long.toString(id)});}
 
     public List<T> getAll() {
         Cursor cursor = database.query(MY_TABLE,
