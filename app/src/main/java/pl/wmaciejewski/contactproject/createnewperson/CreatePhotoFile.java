@@ -32,7 +32,7 @@ public class CreatePhotoFile {
             photo = new File(this.catcheDir,  this.editText.getText().toString());
         }
         if(photo==null){
-            throw new CouldntCreatePhoto("Could create Photo");
+            throw new CouldntCreatePhoto("");
         }
         return photo;
     }

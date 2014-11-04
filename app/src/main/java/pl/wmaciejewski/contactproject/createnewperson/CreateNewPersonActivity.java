@@ -1,6 +1,7 @@
 package pl.wmaciejewski.contactproject.createnewperson;
 
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -88,6 +89,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
                 getImage();
             }
         });
+        this.createPhotoFile = new CreatePhotoFile(this.nameEdit, getCacheDir());
     }
 
     private void initializeComponents() {
@@ -112,6 +114,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         phoneEdit = (EditText) findViewById(R.id.phoneEditView);
         imageView = (ImageView) findViewById(R.id.imagePersonView);
         saveButton = (Button) findViewById(R.id.save_button);
+
     }
 
     private void getImage() {
@@ -145,7 +148,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
             photo = createPhotoFile.getFile();
             startCatchCamerIntent(photo, intent);
         } catch (CouldntCreatePhoto couldntCreatePhoto) {
-            couldntCreatePhoto.printStackTrace();
+            createDialogNoPhoto(couldntCreatePhoto.getMessage());
             return;
         }
 
@@ -255,6 +258,15 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
             }
         });
         wrongValueDialog.show();
+    }
+
+    private AlertDialog.Builder createDialogNoPhoto(String message){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( getApplicationContext());
+        alertDialogBuilder.setTitle(getResources().getString(R.string.no_photo_warn));
+        alertDialogBuilder.setMessage(message);
+        alertDialogBuilder.setIcon(getResources().getDrawable(R.drawable.warn));
+
+        return alertDialogBuilder;
     }
 
 
