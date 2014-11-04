@@ -13,7 +13,7 @@
     <string name="wrong_both">Nieprawidłowy email i numer telefonu \n Chcesz poprawić?</string>
     <string name="from_camera">Zrób zdjęcie</string>
     <string name="imagedialogString">imageDialogID</string>
-    <string name="put_name_first">Please, insert name first</string>
-    <string name="no_photo_warn">Couldn\'t create photo file</string>
-    <string name="choose_action">Choose Action</string>
+    <string name="put_name_first">Proszę najpierw podać imię</string>
+    <string name="no_photo_warn">Nie mogłem stworzyć zdjęcia</string>
+    <string name="choose_action">Wybierz akcję</string>
 </resources>
