@@ -103,7 +103,11 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
         if(requestCode==REQUEST_NEW_PERSON){
             handleRequestNewPerson(resultCode, data);
         }else if(requestCode==REQUEST_EDIT_PERSON){
-
+            if(resultCode==REQUEST_EDIT_PERSON_NUMBER){
+                ParcelPerson parcelPerson=data.getParcelableExtra(REQUEST_CREATE_PERSON);
+                viewModel.updatePerson(parcelPerson.getPerson());
+                updatePersonAdapterList();
+            }
         }
     }
     private void handleRequestNewPerson(int resultCode, Intent data) {

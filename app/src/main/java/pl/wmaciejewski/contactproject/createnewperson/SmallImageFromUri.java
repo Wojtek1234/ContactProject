@@ -54,6 +54,15 @@ public class SmallImageFromUri {
 
     }
 
+    public Bitmap getNormalBitmap(Uri imageUri){
+        try {
+            return  MediaStore.Images.Media.getBitmap(contentResolver, imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public byte[] getScaledBitmap(Bitmap bitmap){
 
 

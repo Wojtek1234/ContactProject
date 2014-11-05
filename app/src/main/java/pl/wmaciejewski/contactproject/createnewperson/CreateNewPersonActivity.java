@@ -37,7 +37,7 @@ import pl.wmaciejewski.contactproject.modelView.ParcelPerson;
 
 public class CreateNewPersonActivity extends FragmentActivity implements ImagePickerDialog.NoticeDialogListener {
 
-    private static boolean NEW_INTENT_FLAG = true;
+
     private int REQUEST_CODE;
     private static final int SELECT_PHOTO_GALLERY = 100;
     private static final int SELECT_PHOTO_CAPTURE = 101;
@@ -46,8 +46,6 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
     private ImageView imageView;
     private EditText nameEdit, surnameEdit, mailEdit, phoneEdit;
     private Button saveButton;
-    private Uri imageUri;
-    private Bitmap smallImage;
     private HashMap<EditText, Validator> validators;
     private boolean areWeGoing = false;
     private Uri selectedImageUri;
@@ -59,29 +57,29 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_person);
         Intent intent = getIntent();
-        try{
+        try {
             ParcelPerson parcelable = intent.getExtras().getParcelable(MainActivity.REQUEST_EDIT_CREATE_PERSON);
-            if (NEW_INTENT_FLAG) {
+
                 if (parcelable != null) {
+
                     initGUI(parcelable.getPerson());
-                    REQUEST_CODE=MainActivity.REQUEST_EDIT_PERSON_NUMBER;
-                }
-                NEW_INTENT_FLAG = false;
-            } else {
+                    REQUEST_CODE = MainActivity.REQUEST_EDIT_PERSON_NUMBER;
+
+                } else {
+
+
                 initGUI(personDataHolder.getPerson());
-            }
 
-        }catch (NullPointerException ne){
+                }
+
+        } catch (NullPointerException ne) {
             doOnCreateIntent();
-            REQUEST_CODE=MainActivity.REQUEST_CREATE_PERSON_NUMBER;
+            REQUEST_CODE = MainActivity.REQUEST_CREATE_PERSON_NUMBER;
         }
-
-
     }
 
     private void doOnCreateIntent() {
         personDataHolder.clearPersonFileds();
-        NEW_INTENT_FLAG = false;
         initGUI();
     }
 
@@ -96,11 +94,32 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         this.createPhotoFile = new CreatePhotoFile(this.nameEdit, getCacheDir());
     }
 
+    private void initGUI(Person person) {
+        initializeComponents();
+        this.personDataHolder.setPerson(person);
+        nameEdit.setText(person.getName());
+        surnameEdit.setText(person.getSurname());
+        mailEdit.setText(person.getEmail());
+        phoneEdit.setText(person.getPhoneNumber());
+        if(person.getImage()!=(null)) imageView.setImageBitmap(new SmallImageFromUri(getContentResolver(), getResources().getDisplayMetrics().density).getNormalBitmap(this.personDataHolder.getPerson().getImage()));
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getImage();
+            }
+        });
+        setBitmap(person.getImage());
+        this.createPhotoFile = new CreatePhotoFile(this.nameEdit, getCacheDir());
+    }
+
     private void initializeComponents() {
         setUpComponents();
         setSaveButtonListener();
         setUpValidators();
     }
+
+
+
     private void setUpValidators() {
         validators = new HashMap<EditText, Validator>();
         validators.put(mailEdit, new EmailValidator());
@@ -145,7 +164,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        File photo ;
+        File photo;
 
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         try {
@@ -202,18 +221,6 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         return validators.get(editText).validate(editText.getText());
     }
 
-    private void initGUI(Person person) {
-        initializeComponents();
-        this.personDataHolder.setPerson(person);
-        nameEdit.setText(person.getName());
-        surnameEdit.setText(person.getSurname());
-        mailEdit.setText(person.getEmail());
-        phoneEdit.setText(person.getPhoneNumber());
-        setBitmap(person.getImage());
-        this.createPhotoFile = new CreatePhotoFile(this.nameEdit, getCacheDir());
-
-
-    }
 
     private void setBitmap(Uri uri) {
         try {
@@ -224,24 +231,28 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         } catch (IOException e) {
             e.printStackTrace();
             imageView.setImageDrawable(getResources().getDrawable(R.drawable.no_photo));
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.no_photo));
         }
     }
 
     private void sendResultIntent() {
+        if (nameEdit.getText().toString().equals(null)) {
+            return;
+        }
         setPersonData();
         ParcelPerson parcelPerson = new ParcelPerson(personDataHolder.getPerson());
         Intent resultIntent = new Intent();
         resultIntent.putExtra(MainActivity.REQUEST_CREATE_PERSON, parcelPerson);
-        setResult(REQUEST_CODE,resultIntent);
-        NEW_INTENT_FLAG = true;
+        setResult(REQUEST_CODE, resultIntent);
         finish();
     }
 
     private void setPersonData() {
-        personDataHolder.getPerson().setImage(imageUri);
         try {
-            int  i=personDataHolder.getPerson().getSmallImage().length;
-        }catch(NullPointerException ne){
+            int i = personDataHolder.getPerson().getSmallImage().length;
+        } catch (NullPointerException ne) {
             SmallImageFromUri smallImageFromUri = new SmallImageFromUri(getContentResolver(), getResources().getDisplayMetrics().density);
             personDataHolder.getPerson().setSmallImage(smallImageFromUri.getScaledBitmap(BitmapFactory.decodeResource(getResources(),
                     R.drawable.no_photo)));
@@ -265,8 +276,8 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         wrongValueDialog.show();
     }
 
-    private AlertDialog.Builder createDialogNoPhoto(String message){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( getApplicationContext());
+    private AlertDialog.Builder createDialogNoPhoto(String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
         alertDialogBuilder.setTitle(getResources().getString(R.string.no_photo_warn));
         alertDialogBuilder.setMessage(message);
         alertDialogBuilder.setIcon(getResources().getDrawable(R.drawable.warn));

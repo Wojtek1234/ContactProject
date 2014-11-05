@@ -12,11 +12,10 @@ import pl.wmaciejewski.contactproject.database.entitys.Person;
  * Created by w.maciejewski on 2014-10-29.
  */
 public class ViewModel {
-    private static ViewModel ourInstance;
-    private PersonListAdapter customAdapter;
+
     private PersonDAO personDAO;
     private GroupDAO groupDAO;
-    private PersonListAdapter personListAdapter;
+
 
 
 
@@ -39,5 +38,8 @@ public class ViewModel {
 
     public void delatePerson(Long id){
         personDAO.removeById(id);
+    }
+    public void updatePerson(Person person){
+        this.personDAO.updateEntity(person);
     }
 }
