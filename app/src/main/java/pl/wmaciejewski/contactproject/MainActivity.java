@@ -141,7 +141,7 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
 
         switch (item.getItemId()) {
             case R.id.action_edit:
-
+                doOnEditAction();
                 return true;
             case R.id.action_delete:
 
@@ -153,6 +153,15 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void doOnEditAction() {
+        for(Person person:this.personListAdapter.getList()){
+            if(person.isChecked()){
+                openActivityForResult(person);
+            }
+           return;
         }
     }
 
