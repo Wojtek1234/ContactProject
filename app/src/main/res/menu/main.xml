@@ -4,13 +4,14 @@
     <item android:id="@+id/action_edit"
         android:title="@string/action_edit"
         android:icon="@drawable/edit"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom" />
     <item android:id="@+id/action_delete"
         android:title="@string/action_delete"
         android:icon="@drawable/delete"
-        android:showAsAction="always" />
+        android:showAsAction="ifRoom|collapseActionView" />
     <item android:id="@+id/action_send_mail"
         android:title="@string/action_mail"
+        android:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/email"/>
 
 </menu>

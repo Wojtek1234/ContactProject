@@ -3,10 +3,15 @@ package pl.wmaciejewski.contactproject.dialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 
 import pl.wmaciejewski.contactproject.R;
 
@@ -17,6 +22,7 @@ public class ChooseActionDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getResources().getString(R.string.choose_action));
         LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -25,7 +31,7 @@ public class ChooseActionDialog extends DialogFragment {
         view.findViewById(R.id.sendEmailButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onMeilButtonClick(ChooseActionDialog.this);
+                mListener.onMailButtonClick(ChooseActionDialog.this);
                 finish();
             }
         });
@@ -43,11 +49,25 @@ public class ChooseActionDialog extends DialogFragment {
                 finish();
             }
         });
-        return builder.create();
+
+        Drawable d = new ColorDrawable(Color.GRAY);
+        d.setAlpha(130);
+        dialog.getWindow().setBackgroundDrawable(d);
+        dialog.getWindow().setContentView(view);
+
+        final WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.CENTER;
+        dialog.setCanceledOnTouchOutside(true);
+
+        return dialog;
     }
 
+
+
     public interface onChooseActionListener{
-        public void onMeilButtonClick(DialogFragment dialog);
+        public void onMailButtonClick(DialogFragment dialog);
         public void onSMSButtonClick(DialogFragment dialog);
         public void onCallButtonClick(DialogFragment dialog);
 

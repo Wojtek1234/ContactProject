@@ -36,4 +36,8 @@ public class ViewModel {
     public Person getById(Long id){
         return this.personDAO.getById(id);
     }
+
+    public void delatePerson(Long id){
+        personDAO.removeById(id);
+    }
 }

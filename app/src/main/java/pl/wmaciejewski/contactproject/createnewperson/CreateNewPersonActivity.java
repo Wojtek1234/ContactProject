@@ -60,7 +60,7 @@ public class CreateNewPersonActivity extends FragmentActivity implements ImagePi
         setContentView(R.layout.activity_create_new_person);
         Intent intent = getIntent();
         try{
-            ParcelPerson parcelable = intent.getExtras().getParcelable("person");
+            ParcelPerson parcelable = intent.getExtras().getParcelable(MainActivity.REQUEST_EDIT_CREATE_PERSON);
             if (NEW_INTENT_FLAG) {
                 if (parcelable != null) {
                     initGUI(parcelable.getPerson());

@@ -20,7 +20,7 @@
             android:src="@drawable/add"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:layout_margin="15dp"
+            android:layout_marginBottom="15dp"
             android:background="?android:selectableItemBackground"
             android:text="@string/addButtonText"/>
 
