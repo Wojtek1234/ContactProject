@@ -17,4 +17,13 @@
     <string name="put_name_first">Please, insert name first</string>
     <string name="no_photo_warn">Couldn\'t create photo file</string>
     <string name="choose_action">Choose Action</string>
+    <string name="dialog_left_button">Ignore and proceed</string>
+    <string name="dialog_right_button">Return and complete</string>
+    <string name="email_hint">e-mail adress</string>
+    <string name="name_hint">Name</string>
+    <string name="phonenumber_hint">phone number</string>
+    <string name="save_button">Save Contact</string>
+    <string name="surname_hint">Surname</string>
+    <string name="title_activity_create_new_person">Create new person</string>
+    <string name="action_edit">Edit</string>
 </resources>

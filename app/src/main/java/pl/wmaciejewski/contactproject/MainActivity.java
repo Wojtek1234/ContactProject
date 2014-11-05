@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +22,6 @@ import pl.wmaciejewski.contactproject.modelView.ParcelPerson;
 import pl.wmaciejewski.contactproject.modelView.PersonListAdapter;
 import pl.wmaciejewski.contactproject.modelView.ViewModel;
 
-
 public class MainActivity extends FragmentActivity implements ChooseActionDialog.onChooseActionListener {
 
     public static final int REQUEST_NEW_PERSON =267 ;
@@ -33,7 +32,7 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
 
     private ViewModel viewModel;
     private ListView list;
-    private Button addBut,removeBut,editBut;
+    private ImageButton addBut;
     private PersonListAdapter personListAdapter;
     private DatabaseProvider databaseProvider;
     private Person currentPerson;
@@ -42,23 +41,18 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initializeGUI();
-
     }
 
     private void initializeGUI() {
-
         databaseProvider=DatabaseProvider.getInstance(getApplicationContext());
         openDataBase(databaseProvider);
         viewModel=new ViewModel(databaseProvider);
         list=(ListView)findViewById(R.id.listview);
         list.setFastScrollEnabled(true);
-
-
         this.personListAdapter=new PersonListAdapter(this,R.layout.single_contact_list_layout,viewModel.getPersonList());
         list.setAdapter(personListAdapter);
-        addBut=(Button)findViewById(R.id.addButton);
+        addBut=(ImageButton)findViewById(R.id.addButton);
         addBut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,10 +68,8 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
                 chooseActionDialog.show(getSupportFragmentManager(), getResources().getString(R.string.choose_action));
             }
         });
-        removeBut=(Button)findViewById(R.id.removeButton);
-        removeBut=(Button)findViewById(R.id.removeButton);
-    }
 
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -85,21 +77,14 @@ public class MainActivity extends FragmentActivity implements ChooseActionDialog
     }
 
     private void openDataBase(DatabaseProvider databaseProvider) {
-        try {
-            databaseProvider.open();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        try {  databaseProvider.open();
+        } catch (SQLException e) { e.printStackTrace();}
     }
 
     private void openActivityForResult() {
-
         Intent intent = new Intent(getApplicationContext(), CreateNewPersonActivity.class);
         startActivityForResult(intent,REQUEST_NEW_PERSON);
-
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

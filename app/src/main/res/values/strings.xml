@@ -6,7 +6,7 @@
     <string name="addButtonText">Add</string>
     <string name="delateButtonText">Delete</string>
     <string name="editButtonText">Edit</string>
-    <string name="title_activity_create_new_person">CreateNewPersonActivity</string>
+    <string name="title_activity_create_new_person">Create new person</string>
     <string name="hello_world">Hello world!</string>
     <string name="wrong_email">Wrong email adress \n please consider changing</string>
     <string name="wrong_phone">Wrong phone number \n please consider changing</string>
@@ -19,4 +19,7 @@
     <string name="put_name_first">Please, insert name first</string>
     <string name="no_photo_warn">Couldn\'t create photo file</string>
     <string name="choose_action">Choose Action</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_mail">Send mail</string>
 </resources>

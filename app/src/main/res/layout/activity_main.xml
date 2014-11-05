@@ -10,30 +10,19 @@
         android:id="@+id/listview"
         android:layout_height="wrap_content"
         android:layout_weight="37"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:weightSum="3"
+
+
         android:layout_weight="3">
-        <Button
+        <ImageButton
             android:id="@+id/addButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_margin="15dp"
+            android:background="?android:selectableItemBackground"
             android:text="@string/addButtonText"/>
-        <Button
-            android:id="@+id/removeButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/delateButtonText"/>
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/editButtonText"/>
-        </LinearLayout>
+
 
 </LinearLayout>

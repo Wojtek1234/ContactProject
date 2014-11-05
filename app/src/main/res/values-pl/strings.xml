@@ -16,4 +16,13 @@
     <string name="put_name_first">Proszę najpierw podać imię</string>
     <string name="no_photo_warn">Nie mogłem stworzyć zdjęcia</string>
     <string name="choose_action">Wybierz akcję</string>
+    <string name="dialog_left_button">Zignoruj i kontynuuj</string>
+    <string name="dialog_right_button">Wróc i popraw</string>
+    <string name="email_hint">adress e-mail</string>
+    <string name="name_hint">Imię</string>
+    <string name="phonenumber_hint">numer telefonu</string>
+    <string name="save_button">Zapisz kontakt</string>
+    <string name="surname_hint">Nazwisko</string>
+    <string name="title_activity_create_new_person">Stworz nowy kontakt</string>
+    <string name="action_edit">Edytuj</string>
 </resources>
