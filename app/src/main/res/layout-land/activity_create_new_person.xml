@@ -1,0 +1,71 @@
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:weightSum="10"
+    >
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:id="@+id/imagePersonView"
+        android:layout_weight="5"
+        android:src="@drawable/no_photo"
+     />
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:weightSum="6"
+    android:orientation="vertical"
+    android:layout_weight="5">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:hint="@string/name_hint"
+            android:id="@+id/editNameView"
+            android:inputType="text"
+            android:layout_weight="1"
+          />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:layout_weight="1"
+            android:hint="@string/surname_hint"
+            android:id="@+id/editSurnameView"
+            android:inputType="text"
+            />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/editEmailView"
+        android:hint="@string/email_hint"
+        android:inputType="textEmailAddress"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/phoneEditView"
+        android:hint="@string/phonenumber_hint"
+        android:inputType="phone"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="15dp"
+        android:text="@string/save_button"
+        android:id="@+id/save_button"
+        />
+
+    </LinearLayout>
+
+
+    </LinearLayout>

@@ -9,6 +9,15 @@ public class Group {
     private String groupName;
 
 
+    public Group(String string) {
+        this.groupName = string;
+    }
+
+    public Group(long aLong, String string) {
+        this.id = aLong;
+        this.groupName = string;
+    }
+
 
     public long getId() {
         return id;

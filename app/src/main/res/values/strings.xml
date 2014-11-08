@@ -2,7 +2,24 @@
 <resources>
 
     <string name="app_name">ContactProject</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="addButtonText">Add</string>
+    <string name="delateButtonText">Delete</string>
+    <string name="editButtonText">Edit</string>
+    <string name="title_activity_create_new_person">Create new person</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="wrong_email">Wrong email adress \n please consider changing</string>
+    <string name="wrong_phone">Wrong phone number \n please consider changing</string>
+    <string name="wrong_both">Wrong email and phone \n plese consider changing</string>
+    <string name="pick_image_source">Pick Image Resource</string>
+    <string name="from_gallery">Pick from gallery</string>
+    <string name="from_camera">Take a photo</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="imagedialogString" type="id">imageDialogID</string>
+    <string name="put_name_first">Please, insert name first</string>
+    <string name="no_photo_warn">Couldn\'t create photo file</string>
+    <string name="choose_action">Choose Action</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_mail">Send mail</string>
 </resources>

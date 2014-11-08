@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">KontaktyProjekt</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="addButtonText">Dodaj</string>
+    <string name="delateButtonText">Kasuj</string>
+    <string name="editButtonText">Edytuj</string>
+    <string name="pick_image_source">Wybierz źródło zdjęcia</string>
+    <string name="from_gallery">Wybierz z galerii</string>
+    <string name="wrong_email">Nieprawidłowy adres e-mail \n Chcesz poprawić?</string>
+    <string name="wrong_phone">Nieprawidłowy numer telefonu \n Chcesz poprawić?</string>
+    <string name="wrong_both">Nieprawidłowy email i numer telefonu \n Chcesz poprawić?</string>
+    <string name="from_camera">Zrób zdjęcie</string>
+    <string name="imagedialogString">imageDialogID</string>
+    <string name="put_name_first">Proszę najpierw podać imię</string>
+    <string name="no_photo_warn">Nie mogłem stworzyć zdjęcia</string>
+    <string name="choose_action">Wybierz akcję</string>
+    <string name="dialog_left_button">Zignoruj i kontynuuj</string>
+    <string name="dialog_right_button">Wróc i popraw</string>
+    <string name="email_hint">adress e-mail</string>
+    <string name="name_hint">Imię</string>
+    <string name="phonenumber_hint">numer telefonu</string>
+    <string name="save_button">Zapisz kontakt</string>
+    <string name="surname_hint">Nazwisko</string>
+    <string name="title_activity_create_new_person">Stworz nowy kontakt</string>
+    <string name="action_edit">Edytuj</string>
+</resources>
